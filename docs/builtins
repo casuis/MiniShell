@@ -1,0 +1,21 @@
+echo: [option] [string]
+	- option "-n" : retour sans new line
+
+cd:
+	- only relative absoluthe path
+
+pwd:
+	- \ option
+
+export:
+	- \ option
+
+unset:
+	- \ option
+
+env:
+	- \ option/arguments
+
+exit:
+	- \ option
+
