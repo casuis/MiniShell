@@ -1,5 +1,9 @@
 echo: [option] [string]
 	- option "-n" : retour sans new line
+	- si '' alors les variables d'environement ne seront pas parte
+	- si "" alors les variables d'environement seront parte
+	- * doit renvoyer tous les noms de fichiers presents en './' (format: [test1.txt test2.txt ...])
+	- 
 
 cd:
 	- only relative absoluthe path
