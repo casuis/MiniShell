@@ -3,12 +3,13 @@ echo: [option] [string]
 	- si '' alors les variables d'environement ne seront pas parte
 	- si "" alors les variables d'environement seront parte
 	- * doit renvoyer tous les noms de fichiers presents en './' (format: [test1.txt test2.txt ...])
-	- 
+	- si rien: return un '\n' sans rien
 
 cd:
 	- only relative absoluthe path
-
-pwd:
+	- cd * ne retourne rien
+	
+	pwd:
 	- \ option
 
 export:
@@ -16,6 +17,7 @@ export:
 
 unset:
 	- \ option
+	- retire la variable d'environement 
 
 env:
 	- \ option/arguments
@@ -23,3 +25,6 @@ env:
 exit:
 	- \ option
 
+
+- variable d'environement tout le temps prise en compte - $
+- si aucune variable d'environement retour de la fonction sans argument
