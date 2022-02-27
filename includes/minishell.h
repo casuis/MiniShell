@@ -19,4 +19,22 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+// Structure pour les variables environement
+typedef struct s_venv
+{
+	char			*key;
+	char			*value;
+}	t_venv;
+
+// Structure des commandes
+typedef struct s_cmd
+{
+	char			*cmd;
+	char			**args;
+	int				fd_in;
+	int				fd_out;
+	struct	s_cmd	*next;
+	// int	aucune gestion pour << et >> pour l'instant
+}	t_cmd;
 #endif
