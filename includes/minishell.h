@@ -25,6 +25,7 @@ typedef struct s_venv
 {
 	char			*key;
 	char			*value;
+	struct s_venv	*next;
 }	t_venv;
 
 // Structure des commandes
