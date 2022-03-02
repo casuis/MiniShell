@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parting.c                                          :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/27 14:53:04 by asimon            #+#    #+#             */
-/*   Updated: 2022/02/27 14:53:06 by asimon           ###   ########.fr       */
+/*   Created: 2022/03/02 16:01:03 by asimon            #+#    #+#             */
+/*   Updated: 2022/03/02 16:01:04 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
 
-size_t		count_cmd(char **str, int argc)
+# include "../includes/minishell.h"
+
+char    *prompt()
 {
-	int	i;
+    char        *str;
 
-	i = 0;
-	while ()	
-}
-
-t_cmd		*parting(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if
-	}
+    str = readline("minishell$ ");
+    while (str != NULL)
+    {
+        if (ft_strlen(str) > 0)
+            add_history(str);
+        parting();
+        str = readline("minishell$ ");
+    }
+    return (str);
 }

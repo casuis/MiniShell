@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parting.c                                          :+:      :+:    :+:   */
+/*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/27 14:53:04 by asimon            #+#    #+#             */
-/*   Updated: 2022/02/27 14:53:06 by asimon           ###   ########.fr       */
+/*   Created: 2022/03/02 16:50:32 by asimon            #+#    #+#             */
+/*   Updated: 2022/03/02 16:50:33 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-size_t		count_cmd(char **str, int argc)
+int		ft_core(char **argv, int argc, char **penv)
 {
-	int	i;
+	char	*prpt;
 
-	i = 0;
-	while ()	
+	prpt = prompt();
+	return (0);
 }
 
-t_cmd		*parting(char *str)
+int		main(int argc, char **argv, char **penv)
 {
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if
-	}
+	ft_core(argv, argc, penv);
+	return (0)
 }

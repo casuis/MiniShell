@@ -12,6 +12,13 @@
 
 
 #include "../includes/minishell.h"
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+
+# include <readline/readline.h>
+# include <readline/history.h>
+
 
 t_cmd	*ft_add_list(t_cmd *start)
 {
@@ -41,6 +48,7 @@ int		main(int argc, char **argv, char **penv)
 	(void)argv;
 	t_cmd	*start;
 	t_cmd	*cmd;
+	char	*str;
 	int		i = 0;
 
 	start = ft_add_list(NULL);
@@ -56,5 +64,6 @@ int		main(int argc, char **argv, char **penv)
 		printf("Creation de list | %p\n", start);
 		start = start->next;
 	}
+	readline("minishell$ ");
 	return (0);
 }

@@ -1,32 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parting.c                                          :+:      :+:    :+:   */
+/*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/27 14:53:04 by asimon            #+#    #+#             */
-/*   Updated: 2022/02/27 14:53:06 by asimon           ###   ########.fr       */
+/*   Created: 2022/03/02 16:46:20 by asimon            #+#    #+#             */
+/*   Updated: 2022/03/02 16:46:27 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-size_t		count_cmd(char **str, int argc)
+int     ft_strlen(char *str)
 {
-	int	i;
+    int     i;
 
-	i = 0;
-	while ()	
+    i = 0;
+    while (str[i])
+        i++;
+    return (i);
 }
 
-t_cmd		*parting(char *str)
+int		ft_word_size(char *str)
 {
 	int		i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && str[i] != ' ' && str[i] != '=' && str[i] != '|')
 	{
-		if
+
 	}
+}
+
+int		ft_cmp(char *s1, char *s2)
+{
+	int		i;
+
+	i = 0;
+	if (s1 && s2)
+	{
+		while (*s1 && *s2)
+		{
+			if (*s1 != *s2)
+				return (0);
+			s1++;
+			s2++;
+		}
+		return (1);
+	}
+	return (0);
 }
