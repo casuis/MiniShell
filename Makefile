@@ -2,7 +2,9 @@ NAME			=	minishell
 
 CC				=	clang
 
-FLAG			=	-Wall -Wextra -Werror
+C_FLAG			=	-Wall -Wextra -Werror
+
+R_FLAG		=	-lreadline
 
 C_FILE			=	main.c
 
@@ -18,7 +20,7 @@ all: $(NAME)
 	$(CC) $(FLAG) -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAG) $(OBJ) -o $(NAME)
+	$(CC) $(FLAG) $(OBJ) $(R_FLAG) -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)
