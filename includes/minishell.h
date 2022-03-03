@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -38,4 +39,19 @@ typedef struct s_cmd
 	struct	s_cmd	*next;
 	// int	aucune gestion pour << et >> pour l'instant
 }	t_cmd;
+
+// structure global
+typedef struct s_shell
+{
+	t_venv			env;
+	t_cmd			cmds;
+	struct s_shell	*next;
+}	t_shell;
+
+t_shell		shell;
+
+int		ft_strlen(char *str);
+char	*prompt();
+void	ft_error(char *str);
+
 #endif
