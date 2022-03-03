@@ -1,47 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.c                                        :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/02 16:46:20 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/02 16:46:27 by asimon           ###   ########.fr       */
+/*   Created: 2022/03/03 13:23:58 by asimon            #+#    #+#             */
+/*   Updated: 2022/03/03 13:24:04 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int     ft_strlen(char *str)
-{
-    int     i;
-
-    i = 0;
-    while (str[i])
-        i++;
-    return (i);
-}
-
-void	ft_error(char *str)
-{
-	write(2, str, ft_strlen(str));
-}
-
-int		ft_cmp(char *s1, char *s2)
-{
-	int		i;
-
-	i = 0;
-	if (s1 && s2)
-	{
-		while (*s1 && *s2)
-		{
-			if (*s1 != *s2)
-				return (0);
-			s1++;
-			s2++;
-		}
-		return (1);
-	}
-	return (0);
-}

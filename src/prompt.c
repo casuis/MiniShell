@@ -18,12 +18,21 @@ char    *prompt()
     char        *str;
 
     str = readline("minishell$ ");
+    printf(str);
     while (str != NULL)
     {
+        printf(str);
         if (ft_strlen(str) > 0)
             add_history(str);
-        parting();
+        // parting();
         str = readline("minishell$ ");
     }
     return (str);
+}
+
+int     main(int argc, char **argv, char **penv)
+{
+    char *str;
+    prompt();
+    return (0);
 }
