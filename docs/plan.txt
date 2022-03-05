@@ -1,3 +1,0 @@
-- compter le nb de pipe
-- savoir les redirections
-- 
