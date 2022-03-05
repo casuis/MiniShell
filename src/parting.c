@@ -12,52 +12,56 @@
 
 #include "../includes/minishell.h"
 
-int	get_next_pipe(char *str)
+int	parse_in_file(char *str, int pos)
 {
-	int		i;
-	int		bol;
-
-	i = 0;
-	bol = 3;
-	while (str[i])
-	{
-		if (str[i] == '"' && bol > 2)
-			bol = 1;
-		else if (str[i] == '\'' && bol > 2)
-			bol = 2;
-		else if (str[i] == '"' && bol == 1)
-			bol = 3;
-		else if (str[i] == '\'' && bol == 2)
-			bol = 3;
-		else if (bol > 2 && str[i] == '|')
-			return (i);
-		i++;
-	}
-	if (bol != 3)
-		return (-1);
-	return (i);
-}
-
-
-int	deffine_cmd_sep(char *str, int pos)
-{
-	int		i;
-	int		y;
-	t_shell	buff;
+	int			i;
+	t_shell		buff;
+	char		*cmd_buff;
+	int			y;
 
 	i = 0;
 	y = 0;
 	buff = shell;
-	while (i < pos)
+	if (str[i + 1] == '>')
+		ft_error("Error: this operator does not have to be recreated\n");
+	if (str[i + 1] == '<')
+		parse_herdoc();
+	while (str[i] && str[i] == ' ')
+		i++;
+	while (str[i + y] && ((i + y) < pos && str[i + y] != ' '))
+		y++;
+	if (buff.cmds.cmd == NULL)
+		buff.cmds.cmd = ft_add_list(NULL);
+	else if (buff.cmds.cmd && buff.cmds.args == NULL)
+		buff.cmds.args = ft_add_arg(str);
+
+}
+
+void	deffine_cmd_sep(char *str, int pos)
+{
+	int		i;
+	t_shell	buff;
+
+	i = 0;
+	buff = shell;
+	if (str == NULL)
+		return ;
+	while (str[i] && i < pos)
 	{
-		while (str[y] != ' ')
-			y++;
-		if (buff.cmds.cmd == NULL)
-			buff.cmds.cmd = ft_strncpy(&str[i], y);
-		else
-		// gestion des arguments avec "" && '' aussi 
-			// buff.cmds.arg
-		i += y;
+		while (str[i] && str[i] == ' ' && i < pos)
+			i++;
+		if (str[i] == '<')
+			i = parse_in_file(&str[i], (pos - i));
+		else if (str[i] == '>')
+			i = parse_out_file(&str[i], (pos - i));
+		else if (str[i] == '$')
+			i = parse_var_env(&str[i], (pos - i));
+		else if (str[i] == '\'' || str[i] == '"')
+			i = parse_quotes(&str[i], (pos - i));
+		else if (str[i] != ' ' && str[i] != '\0')
+			i = create_cmd_arg(&str[i],(pos - i));
+		if (str[i] != '\0')
+			i++;
 	}
 }
 
@@ -68,7 +72,7 @@ t_cmd	*parting(char *str)
 
 	i = 0;
 	balise = 1;
-	while (balise > 0)
+	while (balise > 0 && str[i])
 	{
 		balise = get_next_pipe(&str[i]);
 		write(1, &str[i], balise) ;
@@ -84,12 +88,11 @@ t_cmd	*parting(char *str)
 	return (NULL);
 }
 
-int main(int argc, char const *argv[])
+int		main(int argc, char **argv)
 {
-	char	*test;
+	char *str;
 
-	test = "Salut ceci est un test | apres pipe | apres 2 pipe |\n";
-	parting(test);
-	return 0;
+	// str = "salut < ";
+	deffine_cmd_sep(argv[1], 100);
+	return (0);
 }
-

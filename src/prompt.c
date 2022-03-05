@@ -29,10 +29,3 @@ char    *prompt()
     }
     return (str);
 }
-
-int     main(int argc, char **argv, char **penv)
-{
-    char *str;
-    prompt();
-    return (0);
-}

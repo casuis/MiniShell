@@ -4,7 +4,7 @@ CC				=	clang
 
 C_FLAG			=	-Wall -Wextra -Werror
 
-R_FLAG		=	-lreadline
+R_FLAG			=	-lreadline
 
 C_FILE			=	main.c
 

@@ -12,6 +12,32 @@
 
 #include "../includes/minishell.h"
 
+int	get_next_pipe(char *str)
+{
+	int		i;
+	int		bol;
+
+	i = 0;
+	bol = 3;
+	while (str[i])
+	{
+		if (str[i] == '"' && bol > 2)
+			bol = 1;
+		else if (str[i] == '\'' && bol > 2)
+			bol = 2;
+		else if (str[i] == '"' && bol == 1)
+			bol = 3;
+		else if (str[i] == '\'' && bol == 2)
+			bol = 3;
+		else if (bol > 2 && str[i] == '|')
+			return (i);
+		i++;
+	}
+	if (bol != 3)
+		return (-1);
+	return (i);
+}
+
 int     ft_strlen(char *str)
 {
     int     i;
@@ -20,11 +46,6 @@ int     ft_strlen(char *str)
     while (str[i])
         i++;
     return (i);
-}
-
-void	ft_error(char *str)
-{
-	write(2, str, ft_strlen(str));
 }
 
 int		ft_cmp(char *s1, char *s2)

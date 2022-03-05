@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   core.c                                             :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/02 16:50:32 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/02 16:50:33 by asimon           ###   ########.fr       */
+/*   Created: 2022/03/05 16:20:19 by asimon            #+#    #+#             */
+/*   Updated: 2022/03/05 16:20:20 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-int		ft_core(char **argv, int argc, char **penv)
+void	ft_error(char *str)
 {
-	char	*prpt;
-
-	prpt = prompt();
-	return (0);
-}
-
-int		main(int argc, char **argv, char **penv)
-{
-	ft_core(argv, argc, penv);
-	return (0);
+	write(2, str, ft_strlen(str));
 }
