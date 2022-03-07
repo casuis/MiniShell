@@ -12,6 +12,94 @@
 
 #include "../includes/minishell.h"
 
+int	get_size_arg(char *str)
+{
+	int		ret;
+	int		bol;
+	int		i;
+
+	ret = 0;
+	i = 0;
+	bol = 3;
+	while (str[ret + i])
+	{
+		if (str[ret + i] == '\'' && bol == 3)
+			bol = 1;
+		else if (str[ret + i] == '\'' && bol == 1)
+			bol = 3;
+		else if (str[ret + i] == '"' && bol == 3)
+			bol = 2;
+		else if (str[ret + i] == '"' && bol == 2)
+			bol = 3;
+		else if (str[ret + i] == ' ' && bol == 3)
+			return (ret);
+		if (str[ret + i] != '\'' && str[ret + i] != '"' && str[ret + i])
+			ret++;
+		else
+			i++;
+	}
+	return (ret);
+}
+
+char	*get_arg(char *str)
+{
+	int		quote[2];
+	int		size;
+	char	*ret;
+
+	quote[0] = 0;
+	quote[1] = 0;
+	size = get_size_arg(str);
+	ret = (char *)malloc(sizeof(char) * (size + 1));
+	if (ret == NULL)
+		return (NULL);
+	while (quote[0] < size && str[quote[0] + quote[1]])
+	{
+		if (str[quote[0] + quote[1]] == '\'' || str[quote[0] + quote[1]] == '"')
+			quote[1]++;
+		else
+		{
+			ret[quote[0]] = str[quote[0] + quote[1]];
+			quote[0]++;
+		}
+	}
+	ret[quote[0]] = '\0';
+	return (ret);
+}
+
+int	set_fd_in(char *str)
+{
+	int		ret;
+	char	*file;
+
+	file = get_file(str);
+	ret = open(file, O_RDONLY);
+	if (ret < 0)
+		perror("open:");
+	return (ret);
+}
+
+int	define_fd(char *str, char c)
+{
+	int		i;
+	int		fd;
+	t_shell	buff;
+
+	i = 0;
+	buff = shell;
+	if (str[i] == '\0')
+		ft_error("minishell", "syntax error near unexpected token 'newline'\n");
+	else if (str[i] == '|')
+		ft_error("minishell", "syntax error near unexpected token '|'\n");
+	else
+	{
+		fd = set_fd_in(str);
+		if (c == '<')
+		{
+		}
+	}
+}
+
 int	parse_in_file(char *str, int pos)
 {
 	int			i;
@@ -23,18 +111,15 @@ int	parse_in_file(char *str, int pos)
 	y = 0;
 	buff = shell;
 	if (str[i + 1] == '>')
-		ft_error("Error: this operator does not have to be recreated\n");
-	if (str[i + 1] == '<')
+		ft_error("minishell", "operator '<>' does not have to be recreated\n");
+	else if (str[i + 1] == '<')
 		parse_herdoc();
-	while (str[i] && str[i] == ' ')
-		i++;
-	while (str[i + y] && ((i + y) < pos && str[i + y] != ' '))
-		y++;
-	if (buff.cmds.cmd == NULL)
-		buff.cmds.cmd = ft_add_list(NULL);
-	else if (buff.cmds.cmd && buff.cmds.args == NULL)
-		buff.cmds.args = ft_add_arg(str);
-
+	else
+	{
+		while (str[i] && str[i] == ' ')
+			i++;
+		define_fd(&str[i], '<');
+	}
 }
 
 void	deffine_cmd_sep(char *str, int pos)
@@ -46,7 +131,7 @@ void	deffine_cmd_sep(char *str, int pos)
 	buff = shell;
 	if (str == NULL)
 		return ;
-	while (str[i] && i < pos)
+	while (str[i] && i < pos && buff.error == 0)
 	{
 		while (str[i] && str[i] == ' ' && i < pos)
 			i++;
@@ -69,10 +154,13 @@ t_cmd	*parting(char *str)
 {
 	int		i;
 	int		balise;
+	t_shell	buff;
 
 	i = 0;
 	balise = 1;
-	while (balise > 0 && str[i])
+	buff = shell;
+	buff.error = 0;
+	while (balise > 0 && str[i] && buff.error == 0)
 	{
 		balise = get_next_pipe(&str[i]);
 		write(1, &str[i], balise) ;
@@ -90,9 +178,13 @@ t_cmd	*parting(char *str)
 
 int		main(int argc, char **argv)
 {
-	char *str;
+	char 	*str;
+	int		size = 0;
+	char	*file;
 
-	// str = "salut < ";
-	deffine_cmd_sep(argv[1], 100);
+	str = "f\"ile\".\'c\' t";
+	file = get_arg(str);
+	printf("file: %s\n", file);
+	free(file);
 	return (0);
 }

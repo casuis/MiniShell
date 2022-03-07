@@ -33,9 +33,10 @@ int	get_next_pipe(char *str)
 			return (i);
 		i++;
 	}
-	if (bol != 3)
-		return (-1);
-	return (i);
+	if (bol == 3)
+		return (i);
+	ft_error("minishell", "syntax error unclosed quotes\n");
+	return (-1);
 }
 
 int     ft_strlen(char *str)
@@ -65,4 +66,15 @@ int		ft_cmp(char *s1, char *s2)
 		return (1);
 	}
 	return (0);
+}
+
+void	ft_error(char *prog, char *msg)
+{
+	t_shell		buff;
+
+	buff = shell;
+	write(2, prog, ft_strlen(prog));
+	write(2, ": ", 2);
+	write(2, msg, ft_strlen(msg));
+	buff.error = 1;
 }

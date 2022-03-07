@@ -17,6 +17,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <fcntl.h>
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -45,6 +48,7 @@ typedef struct s_shell
 {
 	t_venv			env;
 	t_cmd			cmds;
+	int				error;
 	struct s_shell	*next;
 }	t_shell;
 
@@ -52,6 +56,6 @@ t_shell		shell;
 
 int		ft_strlen(char *str);
 char	*prompt();
-void	ft_error(char *str);
+void	ft_error(char *prog, char *msg);
 
 #endif
