@@ -72,119 +72,120 @@ int	set_fd_in(char *str)
 	int		ret;
 	char	*file;
 
-	file = get_file(str);
+	file = get_arg(str);
 	ret = open(file, O_RDONLY);
+	free(file);
 	if (ret < 0)
 		perror("open:");
+	fd = dup2(, fd)
 	return (ret);
 }
 
-int	define_fd(char *str, char c)
-{
-	int		i;
-	int		fd;
-	t_shell	buff;
+// int	define_fd(char *str, char c)
+// {
+// 	int		i;
+// 	int		fd;
+// 	t_shell	buff;
 
-	i = 0;
-	buff = shell;
-	if (str[i] == '\0')
-		ft_error("minishell", "syntax error near unexpected token 'newline'\n");
-	else if (str[i] == '|')
-		ft_error("minishell", "syntax error near unexpected token '|'\n");
-	else
-	{
-		fd = set_fd_in(str);
-		if (c == '<')
-		{
-		}
-	}
-}
+// 	i = 0;
+// 	buff = shell;
+// 	if (str[i] == '\0')
+// 		ft_error("minishell", "syntax error near unexpected token 'newline'\n");
+// 	else if (str[i] == '|')
+// 		ft_error("minishell", "syntax error near unexpected token '|'\n");
+// 	else
+// 	{
+// 		fd = set_fd_in(str);
+// 		if (c == '<')
+// 		{
+// 		}
+// 	}
+// }
 
-int	parse_in_file(char *str, int pos)
-{
-	int			i;
-	t_shell		buff;
-	char		*cmd_buff;
-	int			y;
+// int	parse_in_file(char *str, int pos)
+// {
+// 	int			i;
+// 	t_shell		buff;
+// 	char		*cmd_buff;
+// 	int			y;
 
-	i = 0;
-	y = 0;
-	buff = shell;
-	if (str[i + 1] == '>')
-		ft_error("minishell", "operator '<>' does not have to be recreated\n");
-	else if (str[i + 1] == '<')
-		parse_herdoc();
-	else
-	{
-		while (str[i] && str[i] == ' ')
-			i++;
-		define_fd(&str[i], '<');
-	}
-}
+// 	i = 0;
+// 	y = 0;
+// 	buff = shell;
+// 	if (str[i + 1] == '>')
+// 		ft_error("minishell", "operator '<>' does not have to be recreated\n");
+// 	else if (str[i + 1] == '<')
+// 		parse_herdoc();
+// 	else
+// 	{
+// 		while (str[i] && str[i] == ' ')
+// 			i++;
+// 		define_fd(&str[i], '<');
+// 	}
+// }
 
-void	deffine_cmd_sep(char *str, int pos)
-{
-	int		i;
-	t_shell	buff;
+// void	deffine_cmd_sep(char *str, int pos)
+// {
+// 	int		i;
+// 	t_shell	buff;
 
-	i = 0;
-	buff = shell;
-	if (str == NULL)
-		return ;
-	while (str[i] && i < pos && buff.error == 0)
-	{
-		while (str[i] && str[i] == ' ' && i < pos)
-			i++;
-		if (str[i] == '<')
-			i = parse_in_file(&str[i], (pos - i));
-		else if (str[i] == '>')
-			i = parse_out_file(&str[i], (pos - i));
-		else if (str[i] == '$')
-			i = parse_var_env(&str[i], (pos - i));
-		else if (str[i] == '\'' || str[i] == '"')
-			i = parse_quotes(&str[i], (pos - i));
-		else if (str[i] != ' ' && str[i] != '\0')
-			i = create_cmd_arg(&str[i],(pos - i));
-		if (str[i] != '\0')
-			i++;
-	}
-}
+// 	i = 0;
+// 	buff = shell;
+// 	if (str == NULL)
+// 		return ;
+// 	while (str[i] && i < pos && buff.error == 0)
+// 	{
+// 		while (str[i] && str[i] == ' ' && i < pos)
+// 			i++;
+// 		if (str[i] == '<')
+// 			i = parse_in_file(&str[i], (pos - i));
+// 		else if (str[i] == '>')
+// 			i = parse_out_file(&str[i], (pos - i));
+// 		else if (str[i] == '$')
+// 			i = parse_var_env(&str[i], (pos - i));
+// 		else if (str[i] == '\'' || str[i] == '"')
+// 			i = parse_quotes(&str[i], (pos - i));
+// 		else if (str[i] != ' ' && str[i] != '\0')
+// 			i = create_cmd_arg(&str[i],(pos - i));
+// 		if (str[i] != '\0')
+// 			i++;
+// 	}
+// }
 
-t_cmd	*parting(char *str)
-{
-	int		i;
-	int		balise;
-	t_shell	buff;
+// t_cmd	*parting(char *str)
+// {
+// 	int		i;
+// 	int		balise;
+// 	t_shell	buff;
 
-	i = 0;
-	balise = 1;
-	buff = shell;
-	buff.error = 0;
-	while (balise > 0 && str[i] && buff.error == 0)
-	{
-		balise = get_next_pipe(&str[i]);
-		write(1, &str[i], balise) ;
-		i += balise;
-		if (str[i] != '\0')
-			i++;
-		//printf("%s", &str[i]);
-		// if (balise != -1)
-		// 	deffine_cmd_sep(&str[i], balise);
-		// else
-		// 	ft_error("Error: unclosed quote\n");
-	}
-	return (NULL);
-}
+// 	i = 0;
+// 	balise = 1;
+// 	buff = shell;
+// 	buff.error = 0;
+// 	while (balise > 0 && str[i] && buff.error == 0)
+// 	{
+// 		balise = get_next_pipe(&str[i]);
+// 		write(1, &str[i], balise) ;
+// 		i += balise;
+// 		if (str[i] != '\0')
+// 			i++;
+// 		//printf("%s", &str[i]);
+// 		// if (balise != -1)
+// 		// 	deffine_cmd_sep(&str[i], balise);
+// 		// else
+// 		// 	ft_error("Error: unclosed quote\n");
+// 	}
+// 	return (NULL);
+// }
 
 int		main(int argc, char **argv)
 {
 	char 	*str;
 	int		size = 0;
-	char	*file;
+	int		fd = 0;
 
-	str = "f\"ile\".\'c\' t";
-	file = get_arg(str);
-	printf("file: %s\n", file);
-	free(file);
+	str = "l\"is\"t.\'c\' t";
+	fd = set_fd_in(str);
+	printf("fd: %d\n", fd);
 	return (0);
 }
