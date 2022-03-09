@@ -25,12 +25,12 @@
 # include <readline/history.h>
 
 // Structure pour les variables environement
-typedef struct s_venv
+typedef struct s_env
 {
 	char			*key;
 	char			*value;
-	struct s_venv	*next;
-}	t_venv;
+	struct s_env	*next;
+}	t_env;
 
 // Structure des commandes
 typedef struct s_cmd
@@ -46,8 +46,8 @@ typedef struct s_cmd
 // structure global
 typedef struct s_shell
 {
-	t_venv			env;
-	t_cmd			cmds;
+	t_env			*env;
+	t_cmd			*cmds;
 	int				error;
 	struct s_shell	*next;
 }	t_shell;
