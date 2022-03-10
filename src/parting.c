@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
 int	quote_closed(char c, int *bol)
 {
 	if (c == '\'' && *bol == 3)
@@ -26,19 +25,97 @@ int	quote_closed(char c, int *bol)
 	return (1);
 }
 
-// Retour de la length de la variable d'env (value de key)
-int	count_envl(int bol, int *count)
-{
-	int		ret;
-	t_env	*buff;
 
-	ret = 0;
+char	*get_va_env_value(char *str)
+{
+	t_env		*buff;
+
 	buff = shell.env;
-	while (ft_comp(buff->key, )
+	while (buff != NULL)
 	{
+		if (ft_strcmp(str, buff->key) == 1)
+			return (ft_strncpy(buff->value, ft_strlen(buff->value)));
 		buff = buff->next;
 	}
-	return (1);
+	return (NULL);
+}
+
+char	*get_va_env_key(char *str)
+{
+	char	*cmp;
+	int		i;
+	char	*ret;
+
+	i = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '\''
+		&& str[i] != '"' && str[i] != '|')
+		i++;
+	printf("1-i: %d\n", i);
+	ret = malloc(sizeof(char) * (i + 1));
+	i = 0;
+	if (str[i] == '$')
+		str++;
+	while (str[i] && str[i] != ' ' && str[i] != '\''
+		&& str[i] != '"' && str[i] != '|')
+	{
+		ret[i] = str[i]; 
+		i++;
+	}
+	printf("2-i: %d\n", i);
+	ret[i] = '\0';
+	return (ret);
+}
+
+int	count_va_envl(int *count, char *str)
+{
+	char	*key;
+	char	*value;
+	int		ret;
+	int		i;
+
+	i = -1;
+	ret = 1;
+	key = get_va_env_key(str);
+	if (key == NULL)
+		return (0);
+	ret += ft_strlen(key);
+	value = get_va_env_value(key);
+	if (value == NULL)
+	{
+		free(key);
+		return (ret);
+	}
+	*count += ft_strlen(value);
+	free(key);
+	free(value);
+	return (ret);
+}
+
+int	set_instr_va_env(char *str, char *add)
+{
+	char	*key;
+	char	*value;
+	int		size;
+	int		i;
+
+	i = -1;
+	size = 1;
+	key = get_va_env_key(str);
+	if (key == NULL)
+		return (0);
+	value = get_va_env_value(key);
+	size += ft_strlen(key);
+	if (value == NULL)
+	{
+		free(key);
+		return (size);
+	}
+	while (++i < ft_strlen(value))
+		add[i] = value[i];
+	add[i] = '\0';
+	free(key);
+	free(value);
+	return (size);
 }
 
 int	get_size_arg(char *str)
@@ -52,12 +129,13 @@ int	get_size_arg(char *str)
 	bol = 3;
 	while (str[i] && str[i] != ' ' && str[i] != '|')
 	{
-		if (str[i] == '\'' || str[i] == '"')
+		if (str[i] == '\'' && bol == 1 || str[i] == '\'' && bol == 3)
+			i += quote_closed(str[i], &bol);
+		else if (str[i] == '"' && bol == 2 || str[i] == '"' && bol == 3)
 			i += quote_closed(str[i], &bol);
 		else if (str[i] == '$' && bol != 1)
-		// Attends la lenght de la variable d'env
-			i += count_envl(&ret, &str[i]);
-		else if (str[i] != '\'' && str[i] != '"')
+			i += count_va_envl(&ret, &str[i]);
+		else
 		{
 			i++;
 			ret++;
@@ -66,27 +144,7 @@ int	get_size_arg(char *str)
 	return (ret);
 }
 
-
-int	get_env_arg(char *str, char *new)
-{
-	int		ret;
-	t_shell	buff;
-	char	*cmp;
-	int		i;
-
-	ret = 1;
-	i = 0;
-	buff = shell;
-	while (str[ret] && str[ret] != '\'' 
-		&& str[ret] != '"' && str[ret] != ' ')
-		ret++;
-	cmp = malloc(sizeof(char))
-	while (i < ret)
-	{
-		cmp[]
-	}
-}
-
+// Doit etre revu pour prendre les '"' et '\'' quand dans des quotes
 char	*get_arg(char *str)
 {
 	int		ig[2];
@@ -96,38 +154,27 @@ char	*get_arg(char *str)
 	ig[0] = 0;
 	ig[1] = 0;
 	size = get_size_arg(str);
+	printf("size: %d\n", size);
+	if (size == 0)
+		return (NULL);
 	ret = (char *)malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)
 		return (NULL);
-	while (ig[0] < size && str[ig[0] + ig[1]])
-	{
-		if (str[ig[0] + ig[1]] == '\'' || str[ig[0] + ig[1]] == '"')
-			ig[1]++;
-		else if (str[ig[0] + ig[1]] == '$')
-		// Assignation de la variable d'env dans le ret - Devrai avoir une seule fctn pour sortir les va_env
-			ig[1] += get_env_arg(&str[ig[0] + ig[1]], &ret[ig[0]]); 
-		else
-		{
-			ret[ig[0]] = str[ig[0] + ig[1]];
-			ig[0]++;
-		}
-	}
-	ret[ig[0]] = '\0';
 	return (ret);
 }
 
-int	set_fd_in(char *str)
-{
-	int		ret;
-	char	*file;
+// int	set_fd_in(char *str)
+// {
+// 	int		ret;
+// 	char	*file;
 
-	file = get_arg(str);
-	ret = open(file, O_RDONLY);
-	if (ret < 0)
-		perror(file);
-	free(file);
-	return (ret);
-}
+// 	file = get_arg(str);
+// 	ret = open(file, O_RDONLY);
+// 	if (ret < 0)
+// 		perror(file);
+// 	free(file);
+// 	return (ret);
+// }
 
 // int	define_fd(char *str, char c)
 // {
@@ -146,94 +193,98 @@ int	set_fd_in(char *str)
 // 	}
 // }
 
-int	parse_in_file(char *str, int pos)
-{
-	int			i;
-	t_shell		buff;
-	char		*cmd_buff;
-	int			y;
+// int	parse_in_file(char *str, int pos)
+// {
+// 	int			i;
+// 	t_cmd		*buff;
+// 	char		*cmd_buff;
+// 	int			y;
 
-	i = 0;
-	y = 0;
-	buff = shell;
-	if (str[i + 1] == '>')
-		ft_error("minishell", "operator '<>' does not have to be recreated\n");
-	else if (str[i + 1] == '<')
-		parse_herdoc();
-	else
-	{
-		while (str[i] && str[i] == ' ')
-			i++;
-		if (str[i] == '\0')
-			ft_error("minishell", "syntax error near unexpected token 'newline'\n");
-		else if (str[i] == '|')
-			ft_error("minishell", "syntax error near unexpected token '|'\n");
-		buff->cmds.fd_in = set_fd_in(&str[i]);
-	}
-}
+// 	i = 0;
+// 	y = 0;
+// 	buff = shell.cmds;
+// 	if (str[i + 1] == '>')
+// 		ft_error("minishell", "operator '<>' does not have to be recreated\n");
+// 	else if (str[i + 1] == '<')
+// 		parse_herdoc();
+// 	else
+// 	{
+// 		while (str[i] && str[i] == ' ')
+// 			i++;
+// 		if (str[i] == '\0')
+// 			ft_error("minishell", "syntax error near unexpected token 'newline'\n");
+// 		else if (str[i] == '|')
+// 			ft_error("minishell", "syntax error near unexpected token '|'\n");
+// 		buff->fd_in = set_fd_in(&str[i]);
+// 	}
+// }
 
-void	deffine_cmd_sep(char *str, int pos)
-{
-	int		i;
-	t_shell	buff;
+// void	deffine_cmd_sep(char *str, int pos)
+// {
+// 	int		i;
+// 	t_shell	buff;
 
-	i = 0;
-	buff = shell;
-	if (str == NULL)
-		return ;
-	while (str[i] && i < pos && buff.error == 0)
-	{
-		while (str[i] && str[i] == ' ' && i < pos)
-			i++;
-		if (str[i] == '<')
-			i = parse_in_file(&str[i], (pos - i));
-		else if (str[i] == '>')
-			i = parse_out_file(&str[i], (pos - i));
-		else if (str[i] == '$')
-			i = parse_var_env(&str[i], (pos - i));
-		else if (str[i] == '\'' || str[i] == '"')
-			i = parse_quotes(&str[i], (pos - i));
-		else if (str[i] != ' ' && str[i] != '\0')
-			i = create_cmd_arg(&str[i],(pos - i));
-		if (str[i] != '\0')
-			i++;
-	}
-}
+// 	i = 0;
+// 	buff = shell;
+// 	if (str == NULL)
+// 		return ;
+// 	while (str[i] && i < pos && buff.error == 0)
+// 	{
+// 		while (str[i] && str[i] == ' ' && i < pos)
+// 			i++;
+// 		if (str[i] == '<')
+// 			i = parse_in_file(&str[i], (pos - i));
+// 		else if (str[i] == '>')
+// 			i = parse_out_file(&str[i], (pos - i));
+// 		else if (str[i] == '$')
+// 			i = parse_var_env(&str[i], (pos - i));
+// 		else if (str[i] == '\'' || str[i] == '"')
+// 			i = parse_quotes(&str[i], (pos - i));
+// 		else if (str[i] != ' ' && str[i] != '\0')
+// 			i = create_cmd_arg(&str[i],(pos - i));
+// 		if (str[i] != '\0')
+// 			i++;
+// 	}
+// }
 
-t_cmd	*parting(char *str)
-{
-	int		i;
-	int		balise;
-	t_shell	buff;
+// t_cmd	*parting(char *str)
+// {
+// 	int		i;
+// 	int		balise;
+// 	t_shell	buff;
 
-	i = 0;
-	balise = 1;
-	buff = shell;
-	buff.error = 0;
-	while (balise > 0 && str[i] && buff.error == 0)
-	{
-		balise = get_next_pipe(&str[i]);
-		write(1, &str[i], balise) ;
-		i += balise;
-		if (str[i] != '\0')
-			i++;
-		//printf("%s", &str[i]);
-		// if (balise != -1)
-		// 	deffine_cmd_sep(&str[i], balise);
-		// else
-		// 	ft_error("Error: unclosed quote\n");
-	}
-	return (NULL);
-}
+// 	i = 0;
+// 	balise = 1;
+// 	buff = shell;
+// 	buff.error = 0;
+// 	while (balise > 0 && str[i] && buff.error == 0)
+// 	{
+// 		balise = get_next_pipe(&str[i]);
+// 		write(1, &str[i], balise) ;
+// 		i += balise;
+// 		if (str[i] != '\0')
+// 			i++;
+// 		//printf("%s", &str[i]);
+// 		// if (balise != -1)
+// 		// 	deffine_cmd_sep(&str[i], balise);
+// 		// else
+// 		// 	ft_error("Error: unclosed quote\n");
+// 	}
+// 	return (NULL);
+// }
 
-int		main(int argc, char **argv)
+int		main(int argc, char **argv, char **penv)
 {
 	char 	*str;
-	int		size = 0;
-	int		fd = 0;
-
-	str = "l\"is\"t.\'c\' t";
-	fd = set_fd_in(str);
-	printf("fd: %d\n", fd);
+	char	*str2;
+	char	*value;
+	char	*key;
+	int		size[2];
+	
+	str = "\"12\'3\"4$atest'5678'";
+	value = malloc(sizeof(char) * 100);
+	shell.env = set_env(penv);
+	value = get_arg(str);
+	printf("value: %s\n", value);
 	return (0);
 }

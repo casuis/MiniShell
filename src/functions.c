@@ -12,6 +12,25 @@
 
 #include "../includes/minishell.h"
 
+
+char	*ft_strncpy(char *str, int nb)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	ret = (char *)malloc(sizeof(char) * (nb + 1));
+	if (ret == NULL)
+		return (NULL);
+	while (str[i] && i < nb)
+	{
+		ret[i] = str[i];
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
+}
+
 int	get_next_pipe(char *str)
 {
 	int		i;
@@ -49,7 +68,7 @@ int     ft_strlen(char *str)
     return (i);
 }
 
-int		ft_cmp(char *s1, char *s2)
+int		ft_strcmp(char *s1, char *s2)
 {
 	int		i;
 
@@ -63,7 +82,8 @@ int		ft_cmp(char *s1, char *s2)
 			s1++;
 			s2++;
 		}
-		return (1);
+		if (*s1 == '\0' && *s2 == '\0')
+			return (1);
 	}
 	return (0);
 }
@@ -77,4 +97,14 @@ void	ft_error(char *prog, char *msg)
 	write(2, ": ", 2);
 	write(2, msg, ft_strlen(msg));
 	buff.error = 1;
+}
+
+char	*ft_create(int size)
+{
+	char	*ret;
+
+	ret = malloc(sizeof(char) * (size + 1));
+	if (ret == NULL)
+		return (NULL);
+	return (ret);
 }
