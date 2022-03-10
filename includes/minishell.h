@@ -52,10 +52,22 @@ typedef struct s_shell
 	struct s_shell	*next;
 }	t_shell;
 
-t_shell		shell;
+
+static t_shell		shell;
+
 
 int		ft_strlen(char *str);
 char	*prompt();
 void	ft_error(char *prog, char *msg);
+int		ft_strcmp(char *s1, char *s2);
 
+// env
+char	*set_key_env(char *str);
+char	*set_value_env(char *str);
+t_env	*set_env(char **penv);
+char	*get_va_env_value(char *str);
+char	*get_va_env_key(char *str);
+int		count_va_envl(int *count, char *str);
+
+char	*ft_strncpy(char *str, int nb);
 #endif
