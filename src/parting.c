@@ -25,6 +25,20 @@ int	quote_closed(char c, int *bol)
 	return (1);
 }
 
+int	need_to_be_take(char c, int bol)
+{
+	if (c == '\'' && (bol == 3 || bol == 1))
+		return (0);
+	else if (c == '$' && bol == 1)
+		return (1);
+	else if (c == '"' && (bol == 3 || bol == 2))
+		return (0);
+	else if (c == '$' && (bol == 3 || bol == 2))
+		return (0);
+	else
+		return (1);
+	return (0);
+}
 
 char	*get_va_env_value(char *str)
 {
@@ -147,19 +161,34 @@ int	get_size_arg(char *str)
 // Doit etre revu pour prendre les '"' et '\'' quand dans des quotes
 char	*get_arg(char *str)
 {
-	int		ig[2];
+	int		in[2];
 	int		size;
 	char	*ret;
+	int		bol;
 
-	ig[0] = 0;
-	ig[1] = 0;
+	in[0] = 0;
+	in[1] = 0;
+	bol = 3;
 	size = get_size_arg(str);
-	printf("size: %d\n", size);
 	if (size == 0)
 		return (NULL);
 	ret = (char *)malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)
 		return (NULL);
+	while (in[1] < size && str[in[0]])
+	{
+		if (need_to_be_take(str[in[0]], bol))
+		{
+			ret[in[1]] = str[in[0]];
+			ret[++in[1]] = '\0';
+			in[0]++;
+		}
+		else if (str[in[0]] == '$')
+			in[0] += set_instr_va_env(&str[in[0]], &ret[in[1]]);
+		else
+			in[0] += quote_closed(str[in[0]], &bol);
+		in[1] = ft_strlen(ret);
+	}
 	return (ret);
 }
 
@@ -281,7 +310,7 @@ int		main(int argc, char **argv, char **penv)
 	char	*key;
 	int		size[2];
 	
-	str = "\"12\'3\"4$atest'5678'";
+	str = "$test\"'5678'9\"\"";
 	value = malloc(sizeof(char) * 100);
 	shell.env = set_env(penv);
 	value = get_arg(str);
