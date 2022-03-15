@@ -12,13 +12,6 @@
 
 
 #include "../includes/minishell.h"
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-
-# include <readline/readline.h>
-# include <readline/history.h>
-
 
 t_cmd	*ft_add_list(t_cmd *start)
 {
@@ -40,30 +33,4 @@ t_cmd	*ft_add_list(t_cmd *start)
 	}
 	new->next = NULL;
 	return (new);
-}
-
-int		main(int argc, char **argv, char **penv)
-{
-	(void)argc;
-	(void)argv;
-	t_cmd	*start;
-	t_cmd	*cmd;
-	char	*str;
-	int		i = 0;
-
-	start = ft_add_list(NULL);
-	cmd = start;
-	while (i < 4)
-	{
-		cmd = ft_add_list(cmd);
-		i++;
-	}
-	i = 0;
-	while (start != NULL)
-	{
-		printf("Creation de list | %p\n", start);
-		start = start->next;
-	}
-	readline("minishell$ ");
-	return (0);
 }

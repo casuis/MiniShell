@@ -55,6 +55,7 @@ int	get_next_pipe(char *str)
 	if (bol == 3)
 		return (i);
 	ft_error("minishell", "syntax error unclosed quotes\n");
+	shell.error = 1;
 	return (-1);
 }
 

@@ -132,65 +132,6 @@ int	set_instr_va_env(char *str, char *add)
 	return (size);
 }
 
-int	get_size_arg(char *str)
-{
-	int		ret;
-	int		bol;
-	int		i;
-
-	ret = 0;
-	i = 0;
-	bol = 3;
-	while (str[i] && str[i] != ' ' && str[i] != '|')
-	{
-		if (str[i] == '\'' && bol == 1 || str[i] == '\'' && bol == 3)
-			i += quote_closed(str[i], &bol);
-		else if (str[i] == '"' && bol == 2 || str[i] == '"' && bol == 3)
-			i += quote_closed(str[i], &bol);
-		else if (str[i] == '$' && bol != 1)
-			i += count_va_envl(&ret, &str[i]);
-		else
-		{
-			i++;
-			ret++;
-		}
-	}
-	return (ret);
-}
-
-// Doit etre revu pour prendre les '"' et '\'' quand dans des quotes
-char	*get_arg(char *str)
-{
-	int		in[2];
-	int		size;
-	char	*ret;
-	int		bol;
-
-	in[0] = 0;
-	in[1] = 0;
-	bol = 3;
-	size = get_size_arg(str);
-	if (size == 0)
-		return (NULL);
-	ret = (char *)malloc(sizeof(char) * (size + 1));
-	if (ret == NULL)
-		return (NULL);
-	while (in[1] < size && str[in[0]])
-	{
-		if (need_to_be_take(str[in[0]], bol))
-		{
-			ret[in[1]] = str[in[0]];
-			ret[++in[1]] = '\0';
-			in[0]++;
-		}
-		else if (str[in[0]] == '$')
-			in[0] += set_instr_va_env(&str[in[0]], &ret[in[1]]);
-		else
-			in[0] += quote_closed(str[in[0]], &bol);
-		in[1] = ft_strlen(ret);
-	}
-	return (ret);
-}
 
 // int	set_fd_in(char *str)
 // {
@@ -222,7 +163,7 @@ char	*get_arg(char *str)
 // 	}
 // }
 
-// int	parse_in_file(char *str, int pos)
+// int	parse_in_file(char *str, int pos, t_cmd *cmd)
 // {
 // 	int			i;
 // 	t_cmd		*buff;
@@ -248,59 +189,57 @@ char	*get_arg(char *str)
 // 	}
 // }
 
-// void	deffine_cmd_sep(char *str, int pos)
+// void	deffine_cmd_sep(char *str, int pos, t_cmd *cmd)
 // {
 // 	int		i;
-// 	t_shell	buff;
 
 // 	i = 0;
-// 	buff = shell;
 // 	if (str == NULL)
 // 		return ;
-// 	while (str[i] && i < pos && buff.error == 0)
+// 	while (str[i] && i < pos && shell.error == 0)
 // 	{
 // 		while (str[i] && str[i] == ' ' && i < pos)
 // 			i++;
 // 		if (str[i] == '<')
-// 			i = parse_in_file(&str[i], (pos - i));
+// 			i = parse_in_file(&str[i], (pos - i), cmd);
 // 		else if (str[i] == '>')
-// 			i = parse_out_file(&str[i], (pos - i));
-// 		else if (str[i] == '$')
-// 			i = parse_var_env(&str[i], (pos - i));
-// 		else if (str[i] == '\'' || str[i] == '"')
-// 			i = parse_quotes(&str[i], (pos - i));
-// 		else if (str[i] != ' ' && str[i] != '\0')
-// 			i = create_cmd_arg(&str[i],(pos - i));
+// 			i = parse_out_file(&str[i], (pos - i), cmd);
 // 		if (str[i] != '\0')
 // 			i++;
 // 	}
 // }
 
-// t_cmd	*parting(char *str)
-// {
-// 	int		i;
-// 	int		balise;
-// 	t_shell	buff;
+int	*parting(char *str)
+{
+	int		i;
+	int		balise;
+	t_cmd	*cmd;
+	char	**taken;
 
-// 	i = 0;
-// 	balise = 1;
-// 	buff = shell;
-// 	buff.error = 0;
-// 	while (balise > 0 && str[i] && buff.error == 0)
-// 	{
-// 		balise = get_next_pipe(&str[i]);
-// 		write(1, &str[i], balise) ;
-// 		i += balise;
-// 		if (str[i] != '\0')
-// 			i++;
-// 		//printf("%s", &str[i]);
-// 		// if (balise != -1)
-// 		// 	deffine_cmd_sep(&str[i], balise);
-// 		// else
-// 		// 	ft_error("Error: unclosed quote\n");
-// 	}
-// 	return (NULL);
-// }
+	i = 0;
+	balise = 0;
+	cmd = NULL;
+	taken = malloc(sizeof(char *) * 3);
+	taken[2] = NULL;
+	while (str[i] && shell.error == 0)
+	{
+		balise = get_next_pipe(&str[i]);
+		if (shell.error == 1)
+			break ;
+		cmd = ft_add_list(cmd);
+		// defini les fds
+		deffine_cmd_sep(str, balise, cmd);
+		// set cmd / arg
+		while (i < balise)
+		{
+			shell.nb_cmd += create_cmd(taken[1]);
+			taken = ft_set_taken(str, &i, taken, balise);
+			create_args(taken[0], str, &i, balise);
+		}
+		//
+	}
+	return (shell.error);
+}
 
 int		main(int argc, char **argv, char **penv)
 {

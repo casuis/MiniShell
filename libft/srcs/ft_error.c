@@ -12,7 +12,9 @@
 
 #include "../includes/libft.h"
 
-void	ft_error(char *str)
+void	ft_error(char *prog, char *msg)
 {
-	write(2, str, ft_strlen(str));
+	write(2, prog, ft_strlen(prog));
+	write(2, ": ", 2);
+	write(2, msg, ft_strlen(msg));
 }
