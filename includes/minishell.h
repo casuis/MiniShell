@@ -49,19 +49,24 @@ typedef struct s_shell
 	t_env			*env;
 	t_cmd			*cmds;
 	int				error;
+	int				nb_cmd;
 	struct s_shell	*next;
 }	t_shell;
 
 
 static t_shell		shell;
 
+// Chained list
+t_cmd	*ft_add_list(t_cmd *start);
 
+// Functions
 int		ft_strlen(char *str);
 char	*prompt();
 void	ft_error(char *prog, char *msg);
 int		ft_strcmp(char *s1, char *s2);
+int		quote_closed(char c, int *bol);
 
-// env
+// Env
 char	*set_key_env(char *str);
 char	*set_value_env(char *str);
 t_env	*set_env(char **penv);
