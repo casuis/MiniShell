@@ -49,10 +49,10 @@ int	get_next_pipe(char *str)
 		else if (str[i] == '\'' && bol == 2)
 			bol = 3;
 		else if (bol > 2 && str[i] == '|')
-			return (i);
+			break ;
 		i++;
 	}
-	if (bol == 3)
+	if ((bol == 3 && (str[i] == '\0' || str[i + 1] != '|')))
 		return (i);
 	ft_error("minishell", "syntax error unclosed quotes\n");
 	shell.error = 1;
@@ -108,4 +108,17 @@ char	*ft_create(int size)
 	if (ret == NULL)
 		return (NULL);
 	return (ret);
+}
+
+int	quote_closed(char c, int *bol)
+{
+	if (c == '\'' && *bol == 3)
+		*bol = 1;
+	else if (c == '\'' && *bol == 1)
+		*bol = 3;
+	else if (c == '"' && *bol == 3)
+		*bol = 2;
+	else if (c == '"' && *bol == 2)
+		*bol = 3;
+	return (1);
 }
