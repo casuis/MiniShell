@@ -12,38 +12,43 @@
 
 #include "../includes/minishell.h"
 
+// attention au quotes pour les va_ar
+// D'abbord verifier si on est entre quote
 
-char	*ft_set_taken(char *str, int *i)
+char	*get_cmd(char **str, t_cmd *cmds)
 {
-	char	*ret;
 	int		bol;
+	char	*ret;
+	
 
-	// Creation d'une str pour cmd ou j'add au fur et mesure
-	// Meme procede pour argument
-	// Permet de faire une routine?
-	// Creation d'une liste chaine pour str?
-	// Bonne nuit arthur
 	bol = 3;
-	while (str[*i] && str[*i] != ' ' && shell.error == 0)
+	while (**str && (**str != ' ' && bol == 3))
 	{
-		if (str[*i] == '&' && bol == 3)
-			ret = cmd_find_va_env(str, i);
-		else if (str[*i] == '\'') 
-
+		if (**str == '\'' && bol == 3)
+			ret = ft_add_single_quote(ret, str);
+		else if (**str == '"' && bol == 3)
+			ret = ft_add_double_quote(ret, str);
+		else if (**str == '$' && bol == 3)
+			ret = ft_add_var_env(ret, str, cmds);
+		else
+			ret = ft_add(ret, str);
 	}
 }
 
-void	set_cmd_arg(char *work_str, t_cmd *cmd)
+void	set_cmd_arg(char *work_str, t_cmd *cmds)
 {
 	int		i;
-	char	*rest;
+	char	*buff;
 
 	i = 0;
-	while (work_str[i] && shell.error == 0)
+	buff = work_str;
+	while (work_str && shell.error == 0)
 	{
-		// Set cmd  
-		rest = ft_set_taken(work_str, &i);
-		create_args(work_str, &i);
+		if (i == 0)
+			cmds->cmd = get_cmd(&work_str, cmds); 
+		else
+			cmds->args = ft_add_intable(cmds->args, get_cmd(&work_str, cmds));
+		i++;
 	}
 }
 

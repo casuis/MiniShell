@@ -34,17 +34,17 @@ char	*get_va_env_key(char *str)
 
 	i = 0;
 	while (str[i] && str[i] != ' ' && str[i] != '\''
-		&& str[i] != '"' && str[i] != '|')
+		&& str[i] != '"' && str[i] != '|' && str[i] != '$')
 		i++;
 	ret = malloc(sizeof(char) * (i + 1));
-	i = 1;
+	i = 0;
 	while (str[i] && str[i] != ' ' && str[i] != '\''
-		&& str[i] != '"' && str[i] != '|')
+		&& str[i] != '"' && str[i] != '|' && str[i] != '$')
 	{
-		ret[i - 1] = str[i]; 
+		ret[i] = str[i]; 
 		i++;
 	}
-	ret[i - 1] = '\0';
+	ret[i] = '\0';
 	return (ret);
 }
 
@@ -71,4 +71,24 @@ int	count_va_envl(int *count, char *str)
 	free(key);
 	free(value);
 	return (ret);
+}
+
+char	*get_va_env(char *str)
+{
+	char	*key;
+	char	*value;
+	int		i;
+
+	i = -1;
+	key = get_va_env_key(str);
+	if (key == NULL)
+		return (0);
+	value = get_va_env_value(key);
+	if (value == NULL)
+	{
+		free(key);
+		return (NULL);
+	}
+	free(key);
+	return (value);
 }
