@@ -40,3 +40,49 @@ char	*set_new_ret(char *old, int size, int *i)
 		free(buff);
 	return (ret);
 }
+
+void	*send_new_arg(char *str, t_cmd *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+		{
+			add_arg(&str[i], cmd);
+			break ;
+		}
+	}
+}
+
+void	add_arg(char *str, t_cmd *cmd)
+{
+	int		i;
+	int		y;
+	int		size;
+	char	**ret;
+
+	while (cmd->args[size] != NULL)
+		size++;
+	ret = malloc(sizeof(char) * (size + 1));
+	if (ret == NULL)
+		return (NULL);
+	while (cmd->args[y] != NULL)
+	{
+		ret[y] = cmd->args[y];
+		y++;
+	}
+	size = 0;
+	while (str[size] && str[size] != ' ')
+		size++;
+	ret[y] = ft_strncpy(str, size);
+	ret[++y] = NULL;
+	free(cmd->args);
+	cmd->args = ret;
+}
+
+int		main(int argc, char **argv, char *envp)
+{
+	
+}
