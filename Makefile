@@ -19,7 +19,6 @@ C_FLAG			=	-Wall -Wextra -Werror
 R_FLAG			=	-lreadline
 
 C_FILE			=	main.c			\
-					core.c			\
 					add_fctn.c		\
 					add.c			\
 					command.c		\
@@ -32,7 +31,7 @@ C_FILE			=	main.c			\
 					va_env_fct.c	\
 					var_env.c		\
 					work_str.c		\
-					#parting.c		\#
+					parting.c		
 
 C_DIR			=	./src/
 
