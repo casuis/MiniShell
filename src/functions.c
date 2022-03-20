@@ -54,9 +54,9 @@ int	get_next_pipe(char *str)
 	}
 	if ((bol == 3 && (str[i] == '\0' || str[i + 1] != '|')))
 		return (i);
-	ft_error("minishell", "syntax error unclosed quotes\n");
+	ft_error("minishell", "syntax error\n");
 	shell.error = 1;
-	return (-1);
+	return (i);
 }
 
 int     ft_strlen(char *str)
@@ -93,13 +93,10 @@ int		ft_strcmp(char *s1, char *s2)
 
 void	ft_error(char *prog, char *msg)
 {
-	t_shell		buff;
-
-	buff = shell;
 	write(2, prog, ft_strlen(prog));
 	write(2, ": ", 2);
 	write(2, msg, ft_strlen(msg));
-	buff.error = 1;
+	shell.error = 1;
 }
 
 char	*ft_create(int size)

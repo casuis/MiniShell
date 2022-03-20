@@ -32,5 +32,6 @@ t_cmd	*ft_add_list(t_cmd *start)
 		start->next = new;
 	}
 	new->next = NULL;
+	new = init_cmd(new);
 	return (new);
 }

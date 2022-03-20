@@ -85,67 +85,69 @@
 // 	}
 // }
 
-int	parse_in_file(char *str, int pos, t_cmd *cmd)
+// int	parse_in_file(char *str, int pos, t_cmd *cmd)
+// {
+// 	int			i;
+// 	int			y;
+
+// 	i = 0;
+// 	y = 0;
+// 	if (str[i + 1] == '>')
+// 		ft_error("minishell", "operator '<>' does not have to be recreated\n");
+// 	else if (str[i + 1] == '<')
+// 		parse_herdoc();
+// 	else
+// 	{
+// 		while (str[i] && str[i] == ' ')
+// 			i++;
+// 		if (str[i] == '\0')
+// 			ft_error("minishell", "syntax error near unexpected token 'newline'\n");
+// 		else if (str[i] == '|')
+// 			ft_error("minishell", "syntax error near unexpected token '|'\n");
+// 		cmd->fd_in = set_fd_in(&str[i]);
+// 	}
+// }
+
+// void	deffine_cmd_sep(char *str, int pos, t_cmd *cmd)
+// {
+// 	int		i;
+// 	int		bol;
+
+// 	i = 0;
+// 	bol = 3;
+// 	if (str == NULL)
+// 		return ;
+// 	while (str[i] && i < pos && shell.error == 0)
+// 	{
+// 		while (str[i] && str[i] == ' ' && i < pos)
+// 			i++;
+// 		if (str[i] == '<' && bol == 3)
+// 			i = parse_in_file(&str[i], (pos - i), cmd);
+// 		else if (str[i] == '>' && bol == 3)
+// 			i = parse_out_file(&str[i], (pos - i), cmd);
+// 		else if (str[i] == '\'' || str[i] == '"')
+// 			i += quote_closed(str[i], &bol);
+// 		if (str[i] != '\0')
+// 			i++;
+// 	}
+// }
+
+void	parting(char *str)
 {
-	int			i;
-	int			y;
-
-	i = 0;
-	y = 0;
-	if (str[i + 1] == '>')
-		ft_error("minishell", "operator '<>' does not have to be recreated\n");
-	else if (str[i + 1] == '<')
-		parse_herdoc();
-	else
-	{
-		while (str[i] && str[i] == ' ')
-			i++;
-		if (str[i] == '\0')
-			ft_error("minishell", "syntax error near unexpected token 'newline'\n");
-		else if (str[i] == '|')
-			ft_error("minishell", "syntax error near unexpected token '|'\n");
-		cmd->fd_in = set_fd_in(&str[i]);
-	}
-}
-
-void	*deffine_cmd_sep(char *str, int pos, t_cmd *cmd)
-{
-	int		i;
-	int		bol;
-
-	i = 0;
-	bol = 3;
-	if (str == NULL)
-		return ;
-	while (str[i] && i < pos && shell.error == 0)
-	{
-		while (str[i] && str[i] == ' ' && i < pos)
-			i++;
-		if (str[i] == '<' && bol == 3)
-			i = parse_in_file(&str[i], (pos - i), cmd);
-		else if (str[i] == '>' && bol == 3)
-			i = parse_out_file(&str[i], (pos - i), cmd);
-		else if (str[i] == '\'' || str[i] == '"')
-			i += quote_closed(str[i], &bol);
-		if (str[i] != '\0')
-			i++;
-	}
-}
-
-int	*parting(char *str)
-{
-	int		i;
-	int		balise;
+	int		y;
+	int		balise[2];
 	char	*work_str;
+	char	*buff;
 	t_cmd	*cmd;
 
-	i = 0;
-	balise = 0;
+	y = 0;
+	balise[0] = 0;
+	balise[1] = 0;
 	cmd = NULL;
 	work_str = NULL;
-	while (str[i] && shell.error == 0)
+	while (str[balise[0]] && shell.error == 0)
 	{
-		balise = get_next_pipe(&str[i]);
+		balise[1] += get_next_pipe(&str[balise[1]]);
 		if (shell.error == 1)
 			break ;
 
@@ -153,34 +155,36 @@ int	*parting(char *str)
 		cmd = ft_add_list(cmd);
 		
 		// defini les fds - MISSING DEF
-		deffine_cmd_sep(str, balise, cmd);
+		//deffine_cmd_sep(str, balise, cmd);
 
 		// set la work str - DONE
-		work_str = set_work_str(str, i, balise);
+		work_str = set_work_str(str, balise[0], balise[1]);
+		buff = work_str;
 		
 		// set les cmd & args
-		set_cmd_arg(work_str, cmd);
+		// set_cmd_arg(work_str, cmd);
 
+		// Affichage Test
+		printf("workstr: |%s|\n", work_str);
+		// ---------------------------------------------		
+		cmd->cmd = ft_add_var_env(NULL, &work_str, cmd);
+
+		// Affichage test
+		printf("valeur de cmd: |%s|\n", cmd->cmd);
+		if (cmd->args != NULL)
+		{
+			while (cmd->args[y] != NULL)
+			{
+				printf("valeur de args: |%s|\n", cmd->args[y]);
+				y++;
+			}
+			printf("valeur de fd_in: %d\nValeur de fd_out: %d\n", cmd->fd_in, cmd->fd_out);
+		}
+		// -------------------------------------------------------------------------------
+		free(buff);
 		// avance i jusqu'au prochain tour
-		i = balise;
-		if (str[i] != '\0')
-			i++;
+		if (str[balise[1]] != '\0')
+			balise[1]++;
+		balise[0] = balise[1];
 	}
-	return (shell.error);
-}
-
-int		main(int argc, char **argv, char **penv)
-{
-	char 	*str;
-	char	*str2;
-	char	*value;
-	char	*key;
-	int		size[2];
-	
-	str = "$test\"'5678'9\"\"";
-	value = malloc(sizeof(char) * 100);
-	shell.env = set_env(penv);
-	value = get_arg(str);
-	printf("value: %s\n", value);
-	return (0);
 }

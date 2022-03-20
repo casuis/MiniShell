@@ -12,16 +12,15 @@
 
 #include "../includes/minishell.h"
 
+t_shell		shell;
+
 int		ft_core(char **argv, int argc, char **penv)
 {
 	char	*prpt;
 
+	// setter
+	init_shell(penv);
 	prpt = prompt();
 	return (0);
 }
 
-int		main(int argc, char **argv, char **penv)
-{
-	ft_core(argv, argc, penv);
-	return (0);
-}

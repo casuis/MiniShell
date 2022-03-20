@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-t_shell		shell;
 
 // char	*ft_add_single_quote(char *old, char **str)
 // {
@@ -43,7 +42,7 @@ t_shell		shell;
 // // }
 
 // Doit faire le tri post recuperation de l'arg (full espace ne compte pas comme  arg)
-char	*ft_add_var_env(char *old, char **str)
+char	*ft_add_var_env(char *old, char **str, t_cmd *cmd)
 {
 	char	*ret;
 	char	*va_env;
@@ -52,6 +51,8 @@ char	*ft_add_var_env(char *old, char **str)
 
 	i = 0;
 	va_env = get_va_env(*str);
+	if (va_env == NULL)
+		return (NULL);
 	buff = va_env;
 	ret = set_new_ret(old, ft_strlen(va_env), &i);
 	while (**str && **str != ' ' && **str != '\'' 
@@ -65,7 +66,7 @@ char	*ft_add_var_env(char *old, char **str)
 	}
 	ret[i] = '\0';
 	if (*va_env == ' ')
-		send_new_arg()
+		send_new_arg(va_env, cmd);
 	free(buff);
 	return (ret);
 }
@@ -76,27 +77,3 @@ char	*ft_add_var_env(char *old, char **str)
 
 // 	return (ret);
 // }
-
-int			main(int argc, char **argv, char **penv)
-{
-	char	*str;
-	char	*new;
-	t_env	*env;
-	int		i;
-
-	i = 0;
-	shell.env = set_env(penv);
-	env = shell.env;
-	str = malloc(sizeof(char) * 30);
-	while (argv[1][i] != 0)
-	{
-		str[i] = argv[1][i];
-		i++;
-	}
-	str[i] = '\0';
-	new = NULL;
-	new = ft_add_var_env(new, &str);
-	printf("valeur de new: |%s\n", new);
-	printf("Valeur de str: |%s", str);
-	return (0);
-}
