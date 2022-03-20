@@ -166,7 +166,9 @@ void	parting(char *str)
 
 		// Affichage Test
 		printf("workstr: |%s|\n", work_str);
-		// ---------------------------------------------		
+		
+		// ---------------------------------------------	
+		//Va_env - DONE	
 		cmd->cmd = ft_add_var_env(NULL, &work_str, cmd);
 
 		// Affichage test

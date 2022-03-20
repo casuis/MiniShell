@@ -49,42 +49,55 @@ typedef struct s_shell
 	t_env			*env;
 	t_cmd			*cmds;
 	int				error;
-	int				nb_cmd;
-	struct s_shell	*next;
 }	t_shell;
 
 
 extern t_shell		shell;
 
 // Chained list
-t_cmd	*ft_add_list(t_cmd *start);
+t_cmd		*ft_add_list(t_cmd *start);
 
 // Functions
-int		ft_strlen(char *str);
-char	*prompt();
-void	ft_error(char *prog, char *msg);
-int		ft_strcmp(char *s1, char *s2);
-int		quote_closed(char c, int *bol);
-char	*ft_strncpy(char *str, int nb);
+int			ft_strlen(char *str);
+char		*prompt();
+void		ft_error(char *prog, char *msg);
+int			ft_strcmp(char *s1, char *s2);
+int			quote_closed(char c, int *bol);
+char		*ft_strncpy(char *str, int nb);
+int			get_next_pipe(char *str);
 
 // Env
-char	*set_key_env(char *str);
-char	*set_value_env(char *str);
-t_env	*set_env(char **penv);
-char	*get_va_env_value(char *str);
-char	*get_va_env_key(char *str);
-char	*get_va_env(char *str);
-int		count_va_envl(int *count, char *str);
+char		*set_key_env(char *str);
+char		*set_value_env(char *str);
+t_env		*set_env(char **penv);
+char		*get_va_env_value(char *str);
+char		*get_va_env_key(char *str);
+char		*get_va_env(char *str);
+int			count_va_envl(int *count, char *str);
 
 // Work_str
-int	pass_file(char *str, int i, int balise, int bol);
+int			pass_file(char *str, int i, int balise, int bol);
 static int	get_work_str_size(char *str, int i, int balise);
-char	*set_work_str(char *str, int i, int balise);
+char		*set_work_str(char *str, int i, int balise);
 
 // Add
-char	*set_new_ret(char *old, int size, int *i);
-int		get_size(char *str, char del);
+char		*set_new_ret(char *old, int size, int *i);
+int			get_size(char *str, char del);
+char		**add_arg(char *str, t_cmd *cmd);
+void		send_new_arg(char *str, t_cmd *cmd);
+char		*ft_add_var_env(char *old, char **str, t_cmd *cmd);
+
+// Core
+int			ft_core(char **argv, int argc, char **penv);
+void		parting(char *str);
+
+// Prompt
+char    	*prompt();
+
+// Init
+void		init_shell(char **penv);
+t_cmd		*init_cmd(t_cmd	*cmd);
 
 // +
-char	*ft_strjoin(char *s1, char *s2);
+char		*ft_strjoin(char *s1, char *s2);
 #endif
