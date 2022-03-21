@@ -33,6 +33,7 @@ char	*ft_add_single_quote(char *old, char **str)
 	return (ret);
 }
 
+// need to do when single quote after double
 char	*ft_add_double_quote(char *old, char **str)
 {
 	char		*ret;

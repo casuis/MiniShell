@@ -118,7 +118,7 @@ void	parting(char *str)
 		work_str = set_work_str(str, balise[0], balise[1]);
 		buff = work_str;
 		
-		// set les cmd & args
+		// set les cmd & args - ERROR WHEN SNGL QT AFTER DBL QT
 		set_cmd_arg(&work_str, cmd);
 
 		// ---------------------------------------------	
