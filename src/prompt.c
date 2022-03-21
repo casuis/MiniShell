@@ -24,6 +24,11 @@ char    *prompt()
             add_history(str);
         parting(str);
         // Fct teste
+        while (shell.cmds != NULL)
+        {
+            printf("valeur des cmds: |%s|\n", shell.cmds->cmd);
+            shell.cmds = shell.cmds->next;
+        }
         str = readline("minishell$ ");
     }
     return (str);

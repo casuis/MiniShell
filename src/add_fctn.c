@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int		get_size(char *str, char del)
+int	get_size(char *str, char del)
 {
 	int		i;
 
@@ -22,6 +22,29 @@ int		get_size(char *str, char del)
 	while (str[i] != del && str[i])
 		i++;
 	return (i);
+}
+
+int	get_ldbl_quote(char *str)
+{
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	while (str[i] && str[i] != '"')
+	{
+		if (str[i] == '$')
+		{
+			i++;
+			i += count_va_envl(&ret, &str[i]);
+		}
+		else
+		{
+			i++;
+			ret++;
+		}
+	}
+	return (ret);
 }
 
 char	*set_new_ret(char *old, int size, int *i)
@@ -34,8 +57,14 @@ char	*set_new_ret(char *old, int size, int *i)
 	if (ret == NULL)	
 		return (NULL);
 	if (old != NULL)
-		while (old[++*i])
+	{
+		while (old[*i])
+		{
 			ret[*i] = old[*i];
+			*i += 1;
+		}
+		ret[*i] = '\0';
+	}
 	if (buff != NULL)
 		free(buff);
 	return (ret);
@@ -85,4 +114,21 @@ char	**add_arg(char *str, t_cmd *cmd)
 	ret[++y] = NULL;
 	free(cmd->args);
 	return (ret);
+}
+
+int	ft_add(char *str, char *ret)
+{
+	int		i;
+	char	*buff;
+
+	i = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i])
+	{
+		ret[i] = str[i];
+		i++;
+	}
+	ret[i] = '\0';
+	return (i);
 }

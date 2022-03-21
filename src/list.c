@@ -31,7 +31,21 @@ t_cmd	*ft_add_list(t_cmd *start)
 		}
 		start->next = new;
 	}
+	else
+		shell.cmds = new;
 	new->next = NULL;
 	new = init_cmd(new);
 	return (new);
+}
+
+
+t_cmd	*get_last_elem()
+{
+	t_cmd	*buff;
+
+	buff = shell.cmds;
+	if (buff != NULL)
+		while (buff->next != NULL)
+			buff = buff->next;
+	return (buff);
 }

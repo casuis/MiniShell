@@ -56,6 +56,7 @@ extern t_shell		shell;
 
 // Chained list
 t_cmd		*ft_add_list(t_cmd *start);
+t_cmd		*get_last_elem();
 
 // Functions
 int			ft_strlen(char *str);
@@ -80,12 +81,20 @@ int			pass_file(char *str, int i, int balise, int bol);
 static int	get_work_str_size(char *str, int i, int balise);
 char		*set_work_str(char *str, int i, int balise);
 
+// Set Cmd
+void		set_cmd_arg(char **work_str, t_cmd *cmds);
+char		*get_cmd(char **str, t_cmd *cmds);
+
 // Add
 char		*set_new_ret(char *old, int size, int *i);
 int			get_size(char *str, char del);
 char		**add_arg(char *str, t_cmd *cmd);
 void		send_new_arg(char *str, t_cmd *cmd);
 char		*ft_add_var_env(char *old, char **str, t_cmd *cmd);
+char		*ft_add_single_quote(char *old, char **str);
+char		*ft_add_double_quote(char *old, char **str);
+int			get_ldbl_quote(char *str);
+int			ft_add(char *str, char *ret);
 
 // Core
 int			ft_core(char **argv, int argc, char **penv);

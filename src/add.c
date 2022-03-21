@@ -13,35 +13,55 @@
 #include "../includes/minishell.h"
 
 
-// char	*ft_add_single_quote(char *old, char **str)
-// {
-// 	int			i;
-// 	char		*ret;
-// 	int			size;
+char	*ft_add_single_quote(char *old, char **str)
+{
+	int			i;
+	char		*ret;
+	int			size;
 
-// 	i = -1;
-// 	size = ft_strlen(old) + get_size(*str, '\'');
-// 	ret = set_new_ret(old, size, &i);
-// 	while (**str && **str != '\'')
-// 	{
-// 		ret[++i] = **str;
-// 		*str += 1;
-// 	}
-// 	if (**str == '\'')
-// 		*str += 1;
-// 	ret[++i] = '\0';
-// 	return (ret);
-// }
+	i = 0;
+	size = ft_strlen(old) + get_size(*str, '\'');
+	ret = set_new_ret(old, size, &i);
+	while (**str && **str != '\'')
+	{
+		ret[i++] = **str;
+		*str += 1;
+	}
+	if (**str == '\'')
+		*str += 1;
+	ret[i] = '\0';
+	return (ret);
+}
 
-// char	*ft_add_double_quote(char *old, char **str)
-// {
-// 	char		*ret;
-// 	ret = set_new_ret(old, str, &i);
-// 	while (**str && **str != '"')
-// 	return (ret);
-// // }
+char	*ft_add_double_quote(char *old, char **str)
+{
+	char		*ret;
+	char		*value;
+	int			i;
 
-// Doit faire le tri post recuperation de l'arg (full espace ne compte pas comme  arg)
+	i = 0;
+	ret = set_new_ret(old, ft_strlen(old) + get_ldbl_quote(*str), &i);
+	while (**str && **str != '"')
+	{
+		if (**str == '$')
+		{
+			*str += 1;
+			value = get_va_env(*str);
+			while (**str && **str != ' ' && **str != '"')
+				*str += 1;
+			i += ft_add(value, &ret[i]);
+			free(value);
+		}
+		else
+		{
+			ret[i++] = **str;
+			*str += 1;
+		}
+	}
+	ret[i] = '\0';
+	return (ret);
+}
+
 char	*ft_add_var_env(char *old, char **str, t_cmd *cmd)
 {
 	char	*ret;
@@ -71,9 +91,3 @@ char	*ft_add_var_env(char *old, char **str, t_cmd *cmd)
 	return (ret);
 }
 
-// char	*ft_add(char *old, char **str)
-// {
-// 	char	*ret;
-
-// 	return (ret);
-// }

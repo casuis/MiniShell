@@ -60,7 +60,7 @@ int	count_va_envl(int *count, char *str)
 	key = get_va_env_key(str);
 	if (key == NULL)
 		return (0);
-	ret += ft_strlen(key);
+	ret += ft_strlen(key) - 1;
 	value = get_va_env_value(key);
 	if (value == NULL)
 	{

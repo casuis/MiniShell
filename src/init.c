@@ -15,7 +15,6 @@
 void	init_shell(char **penv)
 {
 	shell.env = set_env(penv);
-	shell.cmds = malloc(sizeof(t_cmd) * 1);
 	shell.error = 0;
 }
 

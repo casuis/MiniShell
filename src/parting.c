@@ -12,49 +12,6 @@
 
 #include "../includes/minishell.h"
 
-// int	need_to_be_take(char c, int bol)
-// {
-// 	if (c == '\'' && (bol == 3 || bol == 1))
-// 		return (0);
-// 	else if (c == '$' && bol == 1)
-// 		return (1);
-// 	else if (c == '"' && (bol == 3 || bol == 2))
-// 		return (0);
-// 	else if (c == '$' && (bol == 3 || bol == 2))
-// 		return (0);
-// 	else
-// 		return (1);
-// 	return (0);
-// }
-
-// int	set_instr_va_env(char *str, char *add)
-// {
-// 	char	*key;
-// 	char	*value;
-// 	int		size;
-// 	int		i;
-
-// 	i = -1;
-// 	size = 1;
-// 	key = get_va_env_key(str);
-// 	if (key == NULL)
-// 		return (0);
-// 	value = get_va_env_value(key);
-// 	size += ft_strlen(key);
-// 	if (value == NULL)
-// 	{
-// 		free(key);
-// 		return (size);
-// 	}
-// 	while (++i < ft_strlen(value))
-// 		add[i] = value[i];
-// 	add[i] = '\0';
-// 	free(key);
-// 	free(value);
-// 	return (size);
-// }
-
-
 // int	set_fd_in(char *str)
 // {
 // 	int		ret;
@@ -143,7 +100,7 @@ void	parting(char *str)
 	y = 0;
 	balise[0] = 0;
 	balise[1] = 0;
-	cmd = NULL;
+	cmd = get_last_elem();
 	work_str = NULL;
 	while (str[balise[0]] && shell.error == 0)
 	{
@@ -162,16 +119,11 @@ void	parting(char *str)
 		buff = work_str;
 		
 		// set les cmd & args
-		// set_cmd_arg(work_str, cmd);
+		set_cmd_arg(&work_str, cmd);
 
-		// Affichage Test
-		printf("workstr: |%s|\n", work_str);
-		
 		// ---------------------------------------------	
-		//Va_env - DONE	
-		cmd->cmd = ft_add_var_env(NULL, &work_str, cmd);
-
 		// Affichage test
+		printf("Valeur de size: |%d|\n", get_ldbl_quote(work_str));
 		printf("valeur de cmd: |%s|\n", cmd->cmd);
 		if (cmd->args != NULL)
 		{
@@ -189,4 +141,5 @@ void	parting(char *str)
 			balise[1]++;
 		balise[0] = balise[1];
 	}
+
 }
