@@ -12,9 +12,7 @@
 
 #include "../includes/minishell.h"
 
-// attention au quotes pour les va_ar
-// D'abbord verifier si on est entre quote
-
+// 1 ligne en trop
 char	*get_cmd(char **str, t_cmd *cmds)
 {
 	char	*ret;
@@ -30,21 +28,40 @@ char	*get_cmd(char **str, t_cmd *cmds)
 		else if (**str == '"')
 		{
 			*str += 1;
-			printf("valeur de *str entre: |%s|\n", *str);
 			ret = ft_add_double_quote(ret, str);
-			printf("valeur de *str sorie: |%s|\n", *str);
-			printf("valeur de ret: |%s|\n", ret);
+			*str += 1;
 		}
 		else if (**str == '$')
 		{
 			*str +=1;
-			ret = ft_add_var_env(ret, str, cmds);
+			ret = ft_add_var_env(ret, str, cmds); 
 		}
-		// else
-		// {
-		// 	ret = 
-
+		else
+			ret = ft_add_char(ret, str);
 	}
+	return (ret);
+}
+
+char	**add_intable(char **args, char *str)
+{
+	int		i;
+	int		size;
+	char	**ret;
+
+	i = 0;
+	size = 0;
+	if (args != NULL)
+		while (args[size] != NULL)
+			size++;
+	ret = malloc(sizeof(char *) * (size + 2));
+	while (i < size)
+	{
+		ret[i] = args[i];
+		i++;
+	}
+	ret[i] = str;
+	ret[++i] = NULL;
+	free(args);
 	return (ret);
 }
 
@@ -61,13 +78,11 @@ void	set_cmd_arg(char **work_str, t_cmd *cmds)
 			*work_str += 1;
 		if (i == 0)
 			cmds->cmd = get_cmd(work_str, cmds); 
-		// else
-			// cmds->args = ft_add_intable(cmds->args, get_cmd(&work_str, cmds));
-		// printf("valeur de work_str: |%s|\n", *work_str);
+		else
+			cmds->args = add_intable(cmds->args, get_cmd(work_str, cmds));
 		while (**work_str == ' ')
 			*work_str += 1;
 		i++;
 	}
-	printf("sorti\n");
 }
 

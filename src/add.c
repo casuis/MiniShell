@@ -33,7 +33,6 @@ char	*ft_add_single_quote(char *old, char **str)
 	return (ret);
 }
 
-// need to do when single quote after double
 char	*ft_add_double_quote(char *old, char **str)
 {
 	char		*ret;
@@ -72,13 +71,13 @@ char	*ft_add_var_env(char *old, char **str, t_cmd *cmd)
 
 	i = 0;
 	va_env = get_va_env(*str);
+	while (**str && **str != ' ' && **str != '\'' 
+		&& **str != '"' && **str != '$')
+		*str += 1;
 	if (va_env == NULL)
 		return (NULL);
 	buff = va_env;
 	ret = set_new_ret(old, ft_strlen(va_env), &i);
-	while (**str && **str != ' ' && **str != '\'' 
-		&& **str != '"' && **str != '$')
-		*str += 1;
 	while (*va_env && *va_env != ' ')
 	{
 		ret[i] = *va_env;
@@ -92,3 +91,14 @@ char	*ft_add_var_env(char *old, char **str, t_cmd *cmd)
 	return (ret);
 }
 
+char	*ft_add_char(char *ret, char **str)
+{
+	int		i;
+
+	i = 0;
+	ret = set_new_ret(ret, ft_strlen(ret) + 1, &i);
+	ret[i] = **str;
+	ret[++i] = '\0';
+	*str += 1;
+	return (ret);
+}

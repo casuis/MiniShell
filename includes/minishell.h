@@ -95,10 +95,12 @@ char		*ft_add_single_quote(char *old, char **str);
 char		*ft_add_double_quote(char *old, char **str);
 int			get_ldbl_quote(char *str);
 int			ft_add(char *str, char *ret);
+char		*ft_add_char(char *ret, char **str);
 
 // Core
 int			ft_core(char **argv, int argc, char **penv);
-void		parting(char *str);
+void		parsing(char *str);
+void		deffine_cmd_sep(char *str, int pos, t_cmd *cmd);
 
 // Prompt
 char    	*prompt();

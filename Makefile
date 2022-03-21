@@ -31,7 +31,7 @@ C_FILE			=	main.c			\
 					va_env_fct.c	\
 					var_env.c		\
 					work_str.c		\
-					parting.c		
+					parsing.c		
 
 C_DIR			=	./src/
 

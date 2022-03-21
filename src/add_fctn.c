@@ -124,7 +124,7 @@ int	ft_add(char *str, char *ret)
 	i = 0;
 	if (str == NULL)
 		return (0);
-	while (str[i])
+	while (str[i] && str[i])
 	{
 		ret[i] = str[i];
 		i++;
