@@ -76,18 +76,18 @@ ARGUMENTS	=	-c
 
 
 $(NAME):	$(OBJS)
-		ar rcs $(NAME) $(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
 all:		$(NAME)
 
 .c.o:
-		$(CC) $(FLAGS) $(ARGUMENTS) $< -o  $(<:.c=.o) -I$(HEADERS)
+	$(CC) $(FLAGS) $(ARGUMENTS) $< -o  $(<:.c=.o) -I$(HEADERS)
 
 clean:
-		$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 
 fclean:		clean
-		$(RM) $(NAME) $(OBJS_BNS)
+	@$(RM) $(NAME) $(OBJS_BNS)
 
 re:			fclean all
 

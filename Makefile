@@ -31,9 +31,14 @@ C_FILE			=	main.c			\
 					va_env_fct.c	\
 					var_env.c		\
 					work_str.c		\
-					parsing.c		
+					parsing.c		\
+					parse_in_out.c			
 
 C_DIR			=	./src/
+
+LIBFT_DIR		=	./libft/
+
+LIBFT			=	$(LIBFT_DIR)libft.a
 
 SRC				=	$(addprefix $(C_DIR), $(C_FILE)) 
 
@@ -43,17 +48,22 @@ OBJS			=	$(C_DIR)*.o
 
 all: $(NAME)
 
-.c.o:
+c.o:
 	$(CC) $(FLAG) -c $< -o $@
 
-$(NAME): $(OBJ)
-	$(CC) $(FLAG) $(OBJ) $(R_FLAG) -o $(NAME)
+lib:
+	make -C $(LIBFT_DIR)
+
+$(NAME): lib $(OBJ)
+	$(CC) $(FLAG) $(OBJ) $(LIBFT) $(R_FLAG) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)
+	@make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -rf $(NAME)
+	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 

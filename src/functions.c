@@ -13,24 +13,6 @@
 #include "../includes/minishell.h"
 
 
-char	*ft_strncpy(char *str, int nb)
-{
-	int		i;
-	char	*ret;
-
-	i = 0;
-	ret = (char *)malloc(sizeof(char) * (nb + 1));
-	if (ret == NULL)
-		return (NULL);
-	while (str[i] && i < nb)
-	{
-		ret[i] = str[i];
-		i++;
-	}
-	ret[i] = '\0';
-	return (ret);
-}
-
 int	get_next_pipe(char *str)
 {
 	int		i;
@@ -57,18 +39,6 @@ int	get_next_pipe(char *str)
 	ft_error("minishell", "syntax error\n");
 	shell.error = 1;
 	return (i);
-}
-
-int     ft_strlen(char *str)
-{
-    int     i;
-
-    i = 0;
-	if (str == NULL)
-		return (0);
-    while (str[i])
-        i++;
-    return (i);
 }
 
 int		ft_strcmp(char *s1, char *s2)

@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <fcntl.h>
+# include "../libft/includes/libft.h"
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -59,12 +60,10 @@ t_cmd		*ft_add_list(t_cmd *start);
 t_cmd		*get_last_elem();
 
 // Functions
-int			ft_strlen(char *str);
 char		*prompt();
 void		ft_error(char *prog, char *msg);
 int			ft_strcmp(char *s1, char *s2);
 int			quote_closed(char c, int *bol);
-char		*ft_strncpy(char *str, int nb);
 int			get_next_pipe(char *str);
 
 // Env
@@ -97,10 +96,18 @@ int			get_ldbl_quote(char *str);
 int			ft_add(char *str, char *ret);
 char		*ft_add_char(char *ret, char **str);
 
+// Parsing
+char		*set_in_out_work_str(char *str, int i, int pos);
+char		*get_cmd_fd(char **str);
+void		parse_out_file(char **str, t_cmd *cmd);
+void		parse_in_file(char **str, t_cmd *cmd);
+int			set_fd_out(char **str, int mod);
+int			set_fd_in(char **str);
+
 // Core
 int			ft_core(char **argv, int argc, char **penv);
 void		parsing(char *str);
-void		deffine_cmd_sep(char *str, int pos, t_cmd *cmd);
+void		deffine_cmd_sep(char *str, int i, int pos, t_cmd *cmd);
 
 // Prompt
 char    	*prompt();
@@ -110,5 +117,6 @@ void		init_shell(char **penv);
 t_cmd		*init_cmd(t_cmd	*cmd);
 
 // +
-char		*ft_strjoin(char *s1, char *s2);
+void		ft_test();
+
 #endif

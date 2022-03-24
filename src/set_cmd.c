@@ -18,6 +18,7 @@ char	*get_cmd(char **str, t_cmd *cmds)
 	char	*ret;
 
 	ret = NULL;
+	
 	while (**str && **str != ' ')
 	{
 		if (**str == '\'')
@@ -68,9 +69,11 @@ char	**add_intable(char **args, char *str)
 void	set_cmd_arg(char **work_str, t_cmd *cmds)
 {
 	int		i;
+	int		y;
 	char	**buff;
 
 	i = 0;
+	y = 0;
 	buff = work_str;
 	while (**work_str && shell.error == 0)
 	{
@@ -80,6 +83,7 @@ void	set_cmd_arg(char **work_str, t_cmd *cmds)
 			cmds->cmd = get_cmd(work_str, cmds); 
 		else
 			cmds->args = add_intable(cmds->args, get_cmd(work_str, cmds));
+		// ft_test();
 		while (**work_str == ' ')
 			*work_str += 1;
 		i++;
