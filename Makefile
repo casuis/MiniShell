@@ -10,41 +10,56 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME			=	minishell
+NAME				=	minishell
 
-CC				=	clang
+CC					=	clang
 
-C_FLAG			=	-Wall -Wextra -Werror
+C_FLAG				=	-Wall -Wextra -Werror
 
-R_FLAG			=	-lreadline
+R_FLAG				=	-lreadline
 
-C_FILE			=	main.c			\
-					add_fctn.c		\
-					add.c			\
-					command.c		\
-					core.c			\
-					functions.c		\
-					init.c			\
-					list.c			\
-					prompt.c		\
-					set_cmd.c		\
-					va_env_fct.c	\
-					var_env.c		\
-					work_str.c		\
-					parsing.c		\
-					parse_in_out.c			
+CFILE_COR			=	main.c			\
+						core.c			\
+						prompt.c		\
+						init.c			
 
-C_DIR			=	./src/
+CFILE_PARS			=	add.c					\
+						add_fctn.c				\
+						functions_parting.c		\
+						list.c					\
+						set_cmd.c				\
+						va_env_fct.c			\
+						var_env.c				\
+						work_str.c				\
+						parsing.c				\
+						parse_in_out.c
 
-LIBFT_DIR		=	./libft/
+CFILE_EXEC			=	exec.c					\
+						functions_exec.c
 
-LIBFT			=	$(LIBFT_DIR)libft.a
+C_DIR				=	./src/
 
-SRC				=	$(addprefix $(C_DIR), $(C_FILE)) 
+PARS_DIR_NAME		=	parsing/
 
-OBJ				=	$(SRC: .c=.o)
+EXEC_DIR_NAME		=	exec/
 
-OBJS			=	$(C_DIR)*.o
+PARS_DIR			=	$(addprefix $(C_DIR), $(PARS_DIR_NAME))
+
+EXEC_DIR			=	$(addprefix $(C_DIR), $(EXEC_DIR_NAME))
+
+LIBFT_DIR			=	./libft/
+
+LIBFT				=	$(LIBFT_DIR)libft.a
+
+SRC					=	$(addprefix $(C_DIR), $(CFILE_COR))		\
+						$(addprefix $(PARS_DIR), $(CFILE_PARS))	\
+						$(addprefix $(EXEC_DIR), $(CFILE_EXEC))	
+
+OBJ					=	$(SRC: .c=.o)
+
+OBJS				=	$(C_DIR)*.o			\
+						$(PARS_DIR)*.o		\
+						$(EXEC_DIR)*.o
 
 all: $(NAME)
 

@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "./includes/minishell.h"
 
 void	init_shell(char **penv)
 {
-	shell.env = set_env(penv);
+	shell.cmds = NULL;
 	shell.error = 0;
 }
 
@@ -25,4 +25,30 @@ t_cmd	*init_cmd(t_cmd	*cmd)
 	cmd->fd_in = 0;
 	cmd->fd_out = 1;
 	return (cmd);
+}
+
+void	reinit_shell()
+{
+	t_cmd		*cmd;
+	t_cmd		*next;
+	int			i;
+
+	i = 0;
+	cmd = shell.cmds;
+	next = NULL;
+	if (cmd != NULL)
+		next = cmd->next;
+	while (cmd != NULL)
+	{
+		next = cmd->next;
+		if (cmd->args != NULL)
+		{
+			while (cmd->args[i] != NULL)
+				free(cmd->args[i++]);
+			free(cmd->args);
+			i = 0;
+		}
+		free(cmd);
+		cmd = next;
+	}
 }

@@ -11,30 +11,7 @@
 /* ************************************************************************** */
 
 
-# include "../includes/minishell.h"
-
-char    *prompt()
-{
-    char            *str;
-    t_shell        buff;
-    int         y = 0; // Test
-
-    y = 0;
-    str = readline("minishell$ ");
-    while (str != NULL)
-    {
-        if (ft_strlen(str) > 0)
-            add_history(str);
-        parsing(str);
-        shell.error = 0;
-        // Fct teste
-		// Affichage test
-        ft_test();
-        
-        str = readline("minishell$ ");
-    }
-    return (str);
-}
+# include "./includes/minishell.h"
 
 void    ft_test()
 {
