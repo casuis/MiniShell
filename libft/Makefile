@@ -81,7 +81,7 @@ $(NAME):	$(OBJS)
 all:		$(NAME)
 
 .c.o:
-	$(CC) $(FLAGS) $(ARGUMENTS) $< -o  $(<:.c=.o) -I$(HEADERS)
+	$(CC) $(FLAGS) $(ARGUMENTS) $< -o  $(<:.c=.o)
 
 clean:
 	@$(RM) $(OBJS)

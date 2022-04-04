@@ -61,12 +61,13 @@ int		ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-void	ft_error(char *prog, char *msg)
+int	ft_error(char *prog, char *msg)
 {
 	write(2, prog, ft_strlen(prog));
 	write(2, ": ", 2);
 	write(2, msg, ft_strlen(msg));
 	shell.error = 1;
+	return (-1);
 }
 
 char	*ft_create(int size)

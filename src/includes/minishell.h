@@ -59,7 +59,7 @@ extern t_shell		shell;
 
 // Functions
 char		*prompt();
-void		ft_error(char *prog, char *msg);
+int			ft_error(char *prog, char *msg);
 int			ft_strcmp(char *s1, char *s2);
 
 // Chained list

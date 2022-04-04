@@ -68,3 +68,18 @@ int	create_herdoc_fd(t_cmd *cmd)
 	cmd->herdoc_file = ret;
 	return (ret);
 }
+
+int	parse_herdoc(char **str, t_cmd *cmd)
+{
+	int 	fd;
+	char	*del;
+
+	fd = create_herdoc_fd(cmd);
+	*str += 1;
+	while (**str == ' ' && **str)
+		*str += 1;
+	if (*str == '\0')
+		return (ft_error("minishell", "herdoc need a delimiter\n"));
+	del = 
+	return (fd);
+}
