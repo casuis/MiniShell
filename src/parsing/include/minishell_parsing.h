@@ -48,4 +48,10 @@ void		parse_in_file(char **str, t_cmd *cmd);
 int			set_fd_out(char **str, int mod);
 int			set_fd_in(char **str);
 
+// Herdoc
+char	*find_correct_name(char *file, int count);
+int		uncorrect_name(char *file);
+char	*set_file_name(int count);
+int		create_herdoc_fd();
+
 #endif
