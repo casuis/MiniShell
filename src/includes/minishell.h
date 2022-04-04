@@ -40,6 +40,7 @@ typedef struct s_cmd
 	char			**args;
 	int				fd_in;
 	int				fd_out;
+	char			*herdoc_file;
 	struct	s_cmd	*next;
 	// int	aucune gestion pour << et >> pour l'instant
 }	t_cmd;

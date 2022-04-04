@@ -43,7 +43,6 @@ int		is_builtin(char	*cmd)
 		if (ft_strcmp(builtin[i], cmd))
 		{
 			free(builtin);
-			printf("ici\n");
 			return (1);
 		}
 		i++;
