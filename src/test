@@ -1,0 +1,7 @@
+. env -i
+    env = NULL => return;
+. avec unset tout l'env
+
+. unset : juste [a-z] et '_' sinon err
+
+. env ne montre pas NULL et export seul montre env avec les NULLS et triee
