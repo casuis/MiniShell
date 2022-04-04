@@ -25,12 +25,15 @@ CFILE_COR			=	main.c			\
 
 CFILE_PARS			=	add.c					\
 						add_fctn.c				\
-						functions_parting.c		\
+						functions_parsing.c		\
 						list.c					\
 						set_cmd.c				\
 						va_env_fct.c			\
 						var_env.c				\
 						work_str.c				\
+						herdoc_functions.c		\
+						herdoc.c				\
+						set_herdoc.c			\
 						parsing.c				\
 						parse_in_out.c
 

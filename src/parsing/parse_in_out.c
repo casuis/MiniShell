@@ -57,8 +57,8 @@ void	parse_in_file(char **str, t_cmd *cmd)
 	*str += 1;
 	if (**str == '>')
 		ft_error("minishell", "operator '<>' does not have to be recreated\n");
-	/*else if (**str == '<')
-		parse_herdoc();*/
+	else if (**str == '<')
+		cmd->fd_in = parse_herdoc(str, cmd);
 	else
 	{
 		while (**str && **str == ' ')

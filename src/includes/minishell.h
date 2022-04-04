@@ -40,9 +40,10 @@ typedef struct s_cmd
 	char			**args;
 	int				fd_in;
 	int				fd_out;
+	// Je dois gerer le parsing du '$?'
 	char			*herdoc_file;
+	int				herdoc_extend;
 	struct	s_cmd	*next;
-	// int	aucune gestion pour << et >> pour l'instant
 }	t_cmd;
 
 // structure global

@@ -24,6 +24,8 @@ t_cmd	*init_cmd(t_cmd	*cmd)
 	cmd->args = NULL;
 	cmd->fd_in = 0;
 	cmd->fd_out = 1;
+	cmd->herdoc_extend = 0;
+	cmd->herdoc_file = NULL;
 	return (cmd);
 }
 

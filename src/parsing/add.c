@@ -62,7 +62,7 @@ char	*ft_add_double_quote(char *old, char **str)
 	return (ret);
 }
 
-char	*ft_add_var_env(char *old, char **str, t_cmd *cmd)
+char	*ft_add_var_env(char *old, char **str)
 {
 	char	*ret;
 	char	*va_env;
@@ -86,7 +86,7 @@ char	*ft_add_var_env(char *old, char **str, t_cmd *cmd)
 	}
 	ret[i] = '\0';
 	if (*va_env == ' ')
-		send_new_arg(va_env, cmd);
+		*str = ft_strjoin((char const *)va_env, *str);
 	free(buff);
 	return (ret);
 }

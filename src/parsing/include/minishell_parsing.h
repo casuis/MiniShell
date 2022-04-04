@@ -31,9 +31,9 @@ char		*get_cmd(char **str, t_cmd *cmds);
 // Add
 char		*set_new_ret(char *old, int size, int *i);
 int			get_size(char *str, char del);
-char		**add_arg(char *str, t_cmd *cmd);
-void		send_new_arg(char *str, t_cmd *cmd);
-char		*ft_add_var_env(char *old, char **str, t_cmd *cmd);
+char		**add_arg(char *str, t_cmd *cmd, char *first);
+void		send_new_arg(char *str, t_cmd *cmd, char *first);
+char		*ft_add_var_env(char *old, char **str);
 char		*ft_add_single_quote(char *old, char **str);
 char		*ft_add_double_quote(char *old, char **str);
 int			get_ldbl_quote(char *str);
@@ -50,8 +50,13 @@ int			set_fd_in(char **str);
 
 // Herdoc
 char		*find_correct_name(char *file, int count);
-int			uncorrect_name(char *file);
 char		*set_file_name(int count);
-int			create_herdoc_fd();
+int			create_herdoc_fd(t_cmd *cmd);
+char		*set_herdoc_del(t_cmd *cmd, char **work_str);
+int			parse_herdoc(char **str, t_cmd *cmd);
+char		*ft_add_single_quote_herdoc(char *old, char **str, char del);
+char		*get_cmd_quote_herdoc(char *ret, char **str, t_cmd *cmd);
+char		*get_herdoc_cmd(char **str, t_cmd *cmd);
+
 
 #endif

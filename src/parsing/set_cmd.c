@@ -12,30 +12,35 @@
 
 #include "./include/minishell_parsing.h"
 
-// 1 ligne en trop
+char	*get_cmd_quote(char *ret, char **str, t_cmd *cmds)
+{
+	if (**str == '\'')
+	{
+		*str += 1;
+		ret = ft_add_single_quote(ret, str);
+	}
+	else if (**str == '"')
+	{
+		*str += 1;
+		ret = ft_add_double_quote(ret, str);
+		*str += 1;
+	}
+	return (ret);
+}
+
 char	*get_cmd(char **str, t_cmd *cmds)
 {
 	char	*ret;
 
 	ret = NULL;
-	
 	while (**str && **str != ' ')
 	{
-		if (**str == '\'')
-		{
-			*str += 1;
-			ret = ft_add_single_quote(ret, str);
-		}
-		else if (**str == '"')
-		{
-			*str += 1;
-			ret = ft_add_double_quote(ret, str);
-			*str += 1;
-		}
+		if (**str == '\'' || **str == '"')
+			ret = get_cmd_quote(ret, str, cmds);
 		else if (**str == '$')
 		{
 			*str +=1;
-			ret = ft_add_var_env(ret, str, cmds); 
+			ret = ft_add_var_env(ret, str); 
 		}
 		else
 			ret = ft_add_char(ret, str);
@@ -69,12 +74,10 @@ char	**add_intable(char **args, char *str)
 void	set_cmd_arg(char **work_str, t_cmd *cmds)
 {
 	int		i;
-	int		y;
 	char	**buff;
 	char	*cmd_buff;
 
 	i = 0;
-	y = 0;
 	buff = work_str;
 	while (**work_str && shell.error == 0)
 	{

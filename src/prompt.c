@@ -34,6 +34,8 @@ void    ft_test()
             y = 0;
         }
         printf("valeur de fd_in: %d\nValeur de fd_out: %d\n", buff.cmds->fd_in, buff.cmds->fd_out);
+        printf("Extend: %d\n", buff.cmds->herdoc_extend);
+        printf("Valeur de herdoc_file: |%s|\n", buff.cmds->herdoc_file);
         printf("------------------------------------\n");
         buff.cmds = buff.cmds->next;
     }
