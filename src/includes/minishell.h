@@ -52,6 +52,7 @@ typedef struct s_shell
 	t_env			*env;
 	char			**builtins;
 	t_cmd			*cmds;
+	int				last_return;
 	int				error;
 }	t_shell;
 

@@ -16,6 +16,7 @@ void	init_shell(char **penv)
 {
 	shell.cmds = NULL;
 	shell.error = 0;
+	shell.last_return = 0;
 }
 
 t_cmd	*init_cmd(t_cmd	*cmd)
