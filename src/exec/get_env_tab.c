@@ -49,7 +49,7 @@ char	*ft_strjoinc(char *s1, char *s2, char c)
 
 char	**get_env_tab()
 {
-	t_env	buff;
+	t_env	*buff;
 	char	**ret;
 	int		i;
 
@@ -60,7 +60,7 @@ char	**get_env_tab()
 		i++;
 		buff = buff->next;
 	}
-	ret = malloc(sizeof(char *) * (i + 1);
+	ret = malloc(sizeof(char *) * (i + 1));
 	buff = shell.env;
 	i = 0;
 	while (buff != NULL)
@@ -69,4 +69,5 @@ char	**get_env_tab()
 		i++;
 		buff = buff->next;
 	}
+	return (ret);
 }

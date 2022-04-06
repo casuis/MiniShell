@@ -35,7 +35,7 @@ int		ft_core(char **argv, int argc, char **penv)
 		// Affichage test
         ft_test();
         ft_exec();
-        reinit_shell();
+        // reinit_shell();
 
         str = readline(prmpt);
     }

@@ -16,7 +16,9 @@
 # include "../../includes/minishell.h"
 
 int		is_builtin(char	*cmd);
-void	ft_exec(char **env, char *cmd);
+void	ft_exec();
+char	**get_env_tab();
 void	ft_pipe(int fd, char **env, char *cmd);
 void	ft_pipex(t_cmd *cmd, char **str);
+char	*set_cmd_path(t_cmd *cmd, char **path);
 #endif

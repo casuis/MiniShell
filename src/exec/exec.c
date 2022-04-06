@@ -12,25 +12,46 @@
 
 #include "./include/minishell_exec.h"
 
-void	set_pipe_fd(t_cmd *cmd, int pipe_fd)
-{
-}
+// void	set_pipe_fd(t_cmd *cmd, int pipe_fd)
+// {
+// }
 
-void	ft_pipe_exec(t_cmd *cmd)
+// void	ft_pipe_exec(t_cmd *cmd, char **path)
+// {
+// 	int		pid;
+// 	int		pipe_fd[2];
+
+// 	pipe(pipe_fd);
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		execve(cmd->cmd, cmd->args, path);
+// 		printf("In child\n");
+// 	}
+// 	else
+// 	{
+// 		waitpid(pid, shell.last_return, NULL);
+// 		printf("In parent\n");
+// 	}
+// }
+
+void	ft_execution(t_cmd *cmd,  char **path)
 {
 	int		pid;
 	int		pipe_fd[2];
 
 	pipe(pipe_fd);
 	pid = fork();
-	if (pid)
+	if (pid == 0)
 	{
+		execve(cmd->cmd, cmd->args, path);
+		printf("In child\n");
 	}
 	else
 	{
-
+		waitpid(pid, &shell.last_return, 0);
+		printf("valeur de ret: |%d|\n", shell.last_return);
 	}
-	
 }
 
 void	ft_exec()
@@ -43,18 +64,22 @@ void	ft_exec()
 	path = ft_split(get_va_env_value("PATH"), ':');
 	env = get_env_tab(); // GOOD
 	if (cmd == NULL)
+	{
+		printf("sori pour NULL\n");
 		return ;
+	}
 	if (is_builtin(cmd->cmd))
 		printf("yes\n");
 	// lancement de exec_builtin
 	else
 	{	
 		cmd->cmd = set_cmd_path(cmd, path);
+		printf("valeur de cmd: |%s|\n", cmd->cmd);
 		// Creation du path complet en cmd
-		// FORK de l'environement pour execution
-		if (cmd->next != NULL && cmd->fd_out == 1)
-			ft_pipe_exec(cmd);
-		else
-			ft_exec(cmd);
+		// // FORK de l'environement pour execution
+		// if (cmd->next != NULL && cmd->fd_out == 1)
+		// 	ft_pipe_exec(cmd);
+		// else
+		 	ft_execution(cmd, path);
 	}
 }

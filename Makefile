@@ -38,7 +38,9 @@ CFILE_PARS			=	add.c					\
 						parse_in_out.c
 
 CFILE_EXEC			=	exec.c					\
-						functions_exec.c
+						functions_exec.c		\
+						get_env_tab.c			\
+						set_cmd_path.c
 
 C_DIR				=	./src/
 

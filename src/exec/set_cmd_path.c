@@ -13,9 +13,21 @@
 
 #include "./include/minishell_exec.h"
 
+char	*set_str_path(char *path, t_cmd *cmd)
+{
+	char	*ret;
+	char	*buff;
+	char	*tmp;
+
+	buff = ft_strjoin(path, "/");
+	tmp = buff;
+	ret = ft_strjoin(buff, cmd->cmd);
+	free(tmp);
+	return (ret);
+}
+
 char	*set_cmd_path(t_cmd *cmd, char **path)
 {
-	char	*buff;
 	char	*cmd_path;
 	int		i;
 
@@ -24,18 +36,18 @@ char	*set_cmd_path(t_cmd *cmd, char **path)
 		return (NULL);
 	if (access(cmd->cmd, F_OK) != -1)
 		return (cmd->cmd);
-	buff = ft_strjoin(cmd, path[i]);
-	cmd_path = ft_strjoin(buff, "/");
-	free(buff);
-	while (acces(cmd_path, F_OK) == -1 && path[i] != NULL)
+	cmd_path = set_str_path(path[i], cmd);
+	while (access(cmd_path, F_OK) == -1 && path[++i] != NULL)
 	{
-		i++;
-		buff = ft_strjoin(cmd, path[i]);
-		cmd_path = ft_strjoin(buff, "/");
-		free(buff);
+		free(cmd_path);
+		cmd_path = set_str_path(path[i], cmd);
 	}
 	if (path[i] == NULL)
+	{
+		free(cmd_path);
 		shell.last_return = 127;
-	free(cmd);
+		return (NULL);
+	}
+	free(cmd->cmd);
 	return (cmd_path);
 }

@@ -43,6 +43,8 @@ void	reinit_shell()
 		next = cmd->next;
 	while (cmd != NULL)
 	{
+		if (cmd->cmd != NULL)
+			free(cmd->cmd);
 		next = cmd->next;
 		if (cmd->args != NULL)
 		{
