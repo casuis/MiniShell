@@ -54,6 +54,7 @@ char	**ft_split(char *str, char sep)
 	ret = (char **)malloc(sizeof(char *) * (ft_charcpt(str, sep) + 1));
 	if (ret == NULL)
 		return (NULL);
+	gb_col_add_list((void *)ret);
 	while (str[i])
 	{
 		cpt = ft_strnchr(&str[i], sep);
@@ -65,6 +66,5 @@ char	**ft_split(char *str, char sep)
 		y++;
 	}
 	ret[y] = NULL;
-	free(str);
 	return (ret);
 }

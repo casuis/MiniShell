@@ -19,6 +19,7 @@ char	*ft_stradd(char *str, char buff)
 
 	i = 0;
 	ret = (char *)malloc(sizeof(char) * (ft_strlen(str) + 2));
+	gb_col_add_list((void *)ret);
 	if (ret == NULL)
 		return (NULL);
 	while (str[i])
@@ -26,7 +27,6 @@ char	*ft_stradd(char *str, char buff)
 		ret[i] = str[i];
 		i++;
 	}
-	free(str);
 	ret[i] = buff;
 	ret[++i] = '\0';
 	return (ret);
@@ -48,9 +48,6 @@ int	gnl(int fd, char **str)
 		ret = read(fd, &buff, 1);
 	}
 	if (ret == 0)
-	{
-		free(*str);
 		*str = NULL;
-	}
 	return (ret);
 }

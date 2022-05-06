@@ -26,6 +26,7 @@ static char	*ft_count(int nb, int *size)
 	{
 		*size = 11;
 		ret = (char *)malloc(sizeof(char) * (*size + 1));
+		gb_col_add_list((void *)ret);
 		return (ret);
 	}
 	while (nb / 10 > 0)
@@ -34,6 +35,7 @@ static char	*ft_count(int nb, int *size)
 		*size += 1;
 	}
 	ret = (char *)malloc(sizeof(char) * (*size + 1));
+	gb_col_add_list((void *)ret);
 	return (ret);
 }
 

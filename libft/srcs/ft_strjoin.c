@@ -33,6 +33,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ret = (char *)malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)
 		return (NULL);
+	gb_col_add_list((void *)ret);
 	while (*s1)
 	{
 		ret[i] = *s1;

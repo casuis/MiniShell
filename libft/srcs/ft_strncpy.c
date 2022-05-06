@@ -19,6 +19,7 @@ char	*ft_strncpy(char *str, int nb)
 
 	i = 0;
 	ret = (char *)malloc(sizeof(char) * (nb + 1));
+	gb_col_add_list((void *)ret);
 	if (ret == NULL)
 		return (NULL);
 	while (str[i] && i < nb)

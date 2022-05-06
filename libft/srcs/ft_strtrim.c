@@ -49,6 +49,7 @@ static char	*ft_substr_b(char const *s, unsigned int start, size_t len)
 	ret = (char *)malloc(sizeof(char) * (len + 1));
 	if (ret == NULL)
 		return (NULL);
+	gb_col_add_list((void *)ret);
 	while (i < len && s[i] && start < max_size)
 	{
 		ret[i] = s[start + i];

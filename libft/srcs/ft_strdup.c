@@ -29,6 +29,7 @@ char	*ft_strdup(const char *s1)
 
 	i = 0;
 	ret = (char *)malloc(sizeof(char) * (ft_strlen_b(s1) + 1));
+	gb_col_add_list((void *)ret);
 	if (ret == NULL)
 		return (NULL);
 	while (s1[i])

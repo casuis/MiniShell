@@ -35,6 +35,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	ret = (char *)malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)
 		return (NULL);
+	gb_col_add_list((void *)ret);
 	while (s[i])
 	{
 		ret[i] = f(i, s[i]);
