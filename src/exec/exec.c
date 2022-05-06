@@ -44,13 +44,37 @@ void	ft_execution(t_cmd *cmd,  char **path)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (cmd->fd_out == 1 && cmd->next != NULL)
+		{
+			close(pipe_fd[0]);
+			dup2(pipe_fd[1], 1);
+		}
 		execve(cmd->cmd, cmd->args, path);
-		printf("In child\n");
 	}
 	else
 	{
 		waitpid(pid, &shell.last_return, 0);
-		printf("valeur de ret: |%d|\n", shell.last_return);
+		if (cmd->next != NULL)
+			cmd = cmd->next;
+		else
+			return ;
+		pid = fork();
+		if (pid == 0)
+		{
+			if (cmd->fd_in == 0)
+			{
+				close(pipe_fd[1]);
+				dup2(pipe_fd[0], 0);
+			}
+			dup2(cmd->fd_out, 1);
+			cmd->cmd = set_cmd_path(cmd, path);
+			execve(cmd->cmd, cmd->args, NULL);
+		}
+		else
+		{
+			printf("valeur de ret: |%d|\n", shell.last_return);
+			waitpid(pid, &shell.last_return, 0);
+		}
 	}
 }
 
@@ -74,7 +98,7 @@ void	ft_exec()
 	else
 	{	
 		cmd->cmd = set_cmd_path(cmd, path);
-		printf("valeur de cmd: |%s|\n", cmd->cmd);
+		// printf("valeur de cmd: |%s|\n", cmd->cmd);
 		// Creation du path complet en cmd
 		// // FORK de l'environement pour execution
 		// if (cmd->next != NULL && cmd->fd_out == 1)

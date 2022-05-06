@@ -33,6 +33,7 @@ char	*ft_strjoinc(char *s1, char *s2, char c)
 
 	i = 0;
 	ret = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	gb_col_add_list((void *)ret);
 	if (s1)
 		ft_putstr_in(ret, s1);
 	if (c)
@@ -51,22 +52,23 @@ char	**get_env_tab()
 {
 	t_env	*buff;
 	char	**ret;
-	int		i;
+	int		i[2];
 
-	i = 0;
+	i[0] = 0;
+	i[1] = 0;
 	buff = shell.env;
 	while (buff->next != NULL)
 	{
-		i++;
+		i[0]++;
 		buff = buff->next;
 	}
-	ret = malloc(sizeof(char *) * (i + 1));
+	ret = malloc(sizeof(char *) * (i[0] + 1));
+	gb_col_add_list((void *)ret);
 	buff = shell.env;
-	i = 0;
 	while (buff != NULL)
 	{
-		ret[i] = ft_strjoinc(buff->key, buff->value, '=');
-		i++;
+		ret[i[1]] = ft_strjoinc(buff->key, buff->value, '=');
+		i[1]++;
 		buff = buff->next;
 	}
 	return (ret);

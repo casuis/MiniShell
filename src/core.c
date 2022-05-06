@@ -33,7 +33,7 @@ int		ft_core(char **argv, int argc, char **penv)
         parsing(str);
         // Fct teste
 		// Affichage test
-        ft_test();
+        // ft_test();
         ft_exec();
         // reinit_shell();
 

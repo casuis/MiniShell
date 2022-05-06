@@ -18,6 +18,7 @@ char	**init_builtin_str()
 	char	**ret;
 	
 	ret = malloc(sizeof(char *) * 8);
+	gb_col_add_list((void *)ret);
 	ret[0] = ft_strncpy("cd", 2);
 	ret[1] = ft_strncpy("echo", 4);
 	ret[2] = ft_strncpy("pwd", 3);
@@ -41,10 +42,7 @@ int		is_builtin(char	*cmd)
 	while (builtin[i] != NULL)
 	{
 		if (ft_strcmp(builtin[i], cmd))
-		{
-			free(builtin);
 			return (1);
-		}
 		i++;
 	}
 	return (0);

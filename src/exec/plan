@@ -1,30 +1,52 @@
-Pour Exec:
+# CHANGER LES MALLOCS
+
+	. List chainee des address a chaque malloc
+		=> permet de free simplement
+
+# ATTRIBUTION DES FDS
+
+	. open au moment de l'execution
+
+
+# EXEC:
 
 	- Verification de si la cmd a deja le path
-
-	- Je dois d'aboir definir les fd
-		. si fd == 1 je pipe je ne dup pas
-		. sinon je dup et ne pipe pas
-
-
-	- une fois que entre/sortis deff
-	- Gestion de la valeur d'entre avant de lancer l'exec
-		. si fd == 0 ne rien faire 
-		. sinon dup 
-		. lance l'exec
+	// GESTION DES REDIRECTIONS
+		- Je dois d'aboir definir les fd
+			. si fd == 1 je pipe je ne dup pas
+			. sinon je dup et ne pipe pas
 
 
-	echo -nnnnnnnnnnnn => doit fonctionner
+		- une fois que entre/sortis deff
+		
+		- Gestion de la valeur d'entre avant de lancer l'exec
+			. si fd == 0 ne rien faire 
+			. sinon dup 
+			. lance l'exec
 	
 	- gestion de la valeur de sorti
 		=> stockage dans la struct principal
 
 	- Builtins
-		. Compilation dans le makefile des builtins, execve des fichiers executions 
-		. Main dans chaque builtins du coup
 
 	- Faire attention aux fds (message d'erreur si trop)
 
+
+
+# SIGNAUX
+
+
+# BUILTINS
+
+	. echo -nnnnnnnnnnnn => doit fonctionner
+	. Compilation dans le makefile des builtins, execve des fichiers executions 
+	. Main dans chaque builtins du coup
+
+
+# RETOUR D'ERREUR
+
+
+	. Variable dans la fonction 
 	EXIT STATUS
        The  exit  status  of  an  executed  command  is the value returned by the waitpid system call or equivalent function.  Exit statuses fall between 0 and 255, though, as explained below, the shell may use values above 125 specially.  Exit statuses from shell
        builtins and compound commands are also limited to this range.  Under certain circumstances, the shell will use special values to indicate specific failure modes.
@@ -38,4 +60,6 @@ Pour Exec:
 
        Shell builtin commands return a status of 0 (true) if successful, and non-zero (false) if an error occurs while they execute.  All builtins return an exit status of 2 to indicate incorrect usage, generally invalid options or missing arguments.
 
-       Bash itself returns the exit status of the last command executed, unless a syntax error occurs, in which case it exits with a non-zero value.  See also the exit builtin command below.
+       Bash itself returns the exit status of the last command executed, unless a syntax error occurs, in
+	    which case it exits with a non-zero value.  See also the exit builtin command below.
+

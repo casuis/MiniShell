@@ -1,10 +1,13 @@
 #include "../../includes/minishell.h"
 
+// Test pour pouvoir utiliser cette fonction n'importe ou
+
 char	*ft_create(size_t nb, size_t size)
 {
 	char	*str;
 
 	str = malloc(size * (nb + 1));
+	gb_col_add_list((void *)str);
 	return (str);
 }
 
@@ -18,10 +21,7 @@ char	*ft_pwd()
 		return (NULL) ;
 	path = getcwd(path, len);
 	while (path == NULL)
-	{
-		free(path);
 	  	path = getcwd(path, ++len);
-	}
 	return (path);
 }
 

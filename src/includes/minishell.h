@@ -18,9 +18,11 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 # include <fcntl.h>
 # include "../../libft/includes/libft.h"
+# include "../garbage_collector/includes/gb_collector.h"
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -54,6 +56,7 @@ typedef struct s_shell
 	t_cmd			*cmds;
 	int				last_return;
 	int				error;
+	t_gb_col		*list;
 }	t_shell;
 
 
