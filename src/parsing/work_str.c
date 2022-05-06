@@ -58,6 +58,7 @@ char	*set_work_str(char *str, int i, int balise)
 	ret_i = 0;
 	size = get_work_str_size(str, i, balise);
 	ret = malloc(sizeof(char) * (size + 1));
+	gb_col_add_list((void *)ret);
 	while (i  < balise)
 	{
 		if ((str[i] == '<' || str[i] == '>') && bol == 3)

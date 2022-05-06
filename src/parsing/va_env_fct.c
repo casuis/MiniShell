@@ -29,22 +29,25 @@ char	*get_va_env_value(char *str)
 char	*get_va_env_key(char *str)
 {
 	char	*cmp;
-	int		i;
+	int		i[2];
 	char	*ret;
 
-	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\''
-		&& str[i] != '"' && str[i] != '|' && str[i] != '$')
-		i++;
-	ret = malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\''
-		&& str[i] != '"' && str[i] != '|' && str[i] != '$')
+	i[0] = 0;
+	i[1] = 0;
+	while (str[i[0]] && str[i[0]] != ' ' && str[i[0]] != '\''
+		&& str[i[0]] != '"' && str[i[0]] != '|' && str[i[0]] != '$')
+		i[0]++;
+	ret = malloc(sizeof(char) * (i[0]] + 1));
+	if (ret == NULL)
+		return (NULL);
+	gb_col_add_list((void *)ret);
+	while (str[i[1]] && str[i[1]] != ' ' && str[i[1]] != '\''
+		&& str[i[1]] != '"' && str[i[1]] != '|' && str[i[1]] != '$')
 	{
-		ret[i] = str[i]; 
-		i++;
+		ret[i[1]] = str[i[1]]; 
+		i[1]++;
 	}
-	ret[i] = '\0';
+	ret[i[1]] = '\0';
 	return (ret);
 }
 
@@ -68,8 +71,6 @@ int	count_va_envl(int *count, char *str)
 		return (ret);
 	}
 	*count += ft_strlen(value);
-	free(key);
-	free(value);
 	return (ret);
 }
 
@@ -86,9 +87,7 @@ char	*get_va_env(char *str)
 	value = get_va_env_value(key);
 	if (value == NULL)
 	{
-		free(key);
 		return (NULL);
 	}
-	free(key);
 	return (value);
 }

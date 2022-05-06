@@ -60,6 +60,7 @@ char	**add_intable(char **args, char *str)
 		while (args[size] != NULL)
 			size++;
 	ret = malloc(sizeof(char *) * (size + 2));
+	gb_col_add_list((void *)ret);
 	while (i < size)
 	{
 		ret[i] = args[i];
@@ -67,7 +68,6 @@ char	**add_intable(char **args, char *str)
 	}
 	ret[i] = str;
 	ret[++i] = NULL;
-	free(args);
 	return (ret);
 }
 

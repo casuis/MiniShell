@@ -21,6 +21,7 @@ t_cmd	*ft_add_list(t_cmd *start)
 	new = malloc(sizeof(t_cmd));
 	if (new == NULL)
 		return (NULL);
+	gb_col_add_list((void *)new);
 	if (start != NULL)
 	{
 		buff = start->next;

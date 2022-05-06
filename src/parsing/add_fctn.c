@@ -56,6 +56,7 @@ char	*set_new_ret(char *old, int size, int *i)
 	ret = malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)	
 		return (NULL);
+	gb_col_add_list((void *)ret);
 	if (old != NULL)
 	{
 		while (old[*i])
@@ -65,8 +66,6 @@ char	*set_new_ret(char *old, int size, int *i)
 		}
 		ret[*i] = '\0';
 	}
-	if (buff != NULL)
-		free(buff);
 	return (ret);
 }
 
@@ -101,6 +100,7 @@ char	**add_arg(char *str, t_cmd *cmd, char *first)
 	ret = malloc(sizeof(char) * (size + 2));
 	if (ret == NULL)
 		return (NULL);
+	gb_col_add_list(ret);
 	while (cmd->args && cmd->args[y] != NULL)
 	{
 		ret[y] = cmd->args[y];
@@ -113,7 +113,6 @@ char	**add_arg(char *str, t_cmd *cmd, char *first)
 	ret[++y] = ft_strncpy(str, size);
 	if (ret[y] != NULL)
 		ret[++y] = NULL;
-	free(cmd->args);
 	return (ret);
 }
 

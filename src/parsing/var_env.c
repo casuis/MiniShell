@@ -27,6 +27,7 @@ char	*set_key_env(char *str)
 	ret = malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)
 		return (NULL);
+	gb_col_add_list((void *)ret);
 	while (i < size)
 	{
 		ret[i] = str[i];
@@ -55,6 +56,7 @@ char	*set_value_env(char *str)
 	ret = malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)
 		return (NULL);
+	gb_col_add_list((void *)ret);
 	while (i < size)
 	{
 		ret[i] = str[i];
@@ -64,23 +66,20 @@ char	*set_value_env(char *str)
 	return (ret);
 }
 
-t_env	*set_env(char **penv)
+static t_env	*set_strings_env(t_env *ret, t_env *buff, t_env *start)
 {
 	int		i;
-	t_env	*ret;
-	t_env	*buff;
-	t_env	*start;
 
 	i = 0;
-	if (penv == NULL || penv[i] == NULL)
-		return (NULL);
-	ret = malloc(sizeof(t_env));
-	buff = ret;
-	start = ret;
 	while (penv[i] != NULL)
 	{
 		if (i > 0)
+		{
 			ret = malloc(sizeof(t_env));
+			if (ret == NULL)
+				return (NULL);
+			gb_col_add_list((void *)ret);
+		}
 		ret->key = set_key_env(penv[i]);
 		ret->value = set_value_env(penv[i]);
 		buff->next = ret;
@@ -89,4 +88,22 @@ t_env	*set_env(char **penv)
 		i++;
 	}
 	return (start);
+}
+
+t_env	*set_env(char **penv)
+{
+	int		i;
+	t_env	*ret;
+	t_env	*buff;
+	t_env	*start;
+
+	if (penv == NULL || penv[i] == NULL)
+		return (NULL);
+	ret = malloc(sizeof(t_env));
+	if (ret == NULL)
+		return (NULL);
+	gb_col_add_list((void *)ret);
+	buff = ret;
+	start = ret;
+	return (set_strings_env(ret, buff, start));
 }

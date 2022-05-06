@@ -77,6 +77,7 @@ char	*ft_create(int size)
 	ret = malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)
 		return (NULL);
+	gb_col_add_list((void *)ret);
 	return (ret);
 }
 
