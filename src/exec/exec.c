@@ -70,27 +70,45 @@ void	ft_execution(t_cmd *cmd,  char **path, char **env)
 	}
 }
 
-void	ft_exec_cmd(t_cmd *cmd, char **path, char **env, int pipe_fd[])
+void	ft_exec_cmd(t_cmd *cmd, char **path, char **env)
 {
-	if (cmd->next != NULL)
+	int		pid;
+	int		pipe_fd[2];
+	int   fd_in;
+
+	while (cmd != NULL)
 	{
-		dup2(pipe_fd[1], 1);
-		close(pipe_fd[1]);
+		cmd->cmd = set_cmd_path(cmd, path);
+		pipe(pipe_fd);
+		if ((pid = fork()) == -1)
+			exit(EXIT_FAILURE);
+		else if (pid == 0)
+		{
+			if (cmd->fd_in == 0)
+				dup2(fd_in, 0); //change the input according to the old one 
+			else
+				dup2(cmd->fd_in, 0);
+			if (cmd->next != NULL)
+				dup2(pipe_fd[1], 1);
+			close(pipe_fd[0]);
+			execve(cmd->cmd, cmd->args, env);
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			wait(&shell.last_return);
+			close(pipe_fd[1]);
+			fd_in = pipe_fd[0]; //save the input for the next command
+			cmd = cmd->next;
+		}
 	}
-	else
-		close(pipe_fd[1]);
-	close(pipe_fd[0]);
-	execve(cmd->cmd, cmd->args, env);
 }
 
 void	ft_exec()
 {
 	char	**path;
 	char	**env;
-	int		pid;
-	int		pipe_fd[2];
 	t_cmd	*cmd;
-	int   fd_in;
 
 	cmd = shell.cmds;
 	path = ft_split(get_va_env_value("PATH"), ':');
@@ -103,29 +121,5 @@ void	ft_exec()
 	if (is_builtin(cmd->cmd))
 		printf("yes\n");
 	else
-	{	
-		while (cmd != NULL)
-		{
-			cmd->cmd = set_cmd_path(cmd, path);
-			pipe(pipe_fd);
-			if ((pid = fork()) == -1)
-				exit(EXIT_FAILURE);
-			else if (pid == 0)
-			{
-				dup2(fd_in, 0); //change the input according to the old one 
-				if (cmd->next != NULL)
-					dup2(pipe_fd[1], 1);
-				close(pipe_fd[0]);
-				execve(cmd->cmd, cmd->args, env);
-				exit(EXIT_FAILURE);
-			}
-			else
-			{
-				wait(&shell.last_return);
-				close(pipe_fd[1]);
-				fd_in = pipe_fd[0]; //save the input for the next command
-				cmd = cmd->next;
-			}
-		}
-	}
+		ft_exec_cmd(cmd, path, env);
 }
