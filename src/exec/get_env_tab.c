@@ -71,5 +71,6 @@ char	**get_env_tab()
 		i[1]++;
 		buff = buff->next;
 	}
+	ret[i[1]] = NULL;
 	return (ret);
 }

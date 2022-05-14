@@ -22,10 +22,16 @@
 # include <sys/types.h>
 # include <fcntl.h>
 # include "../../libft/includes/libft.h"
-# include "../garbage_collector/includes/gb_collector.h"
 
 # include <readline/readline.h>
 # include <readline/history.h>
+
+
+typedef struct s_gb_col
+{
+	void			*ptr;
+	struct s_gb_col	*next;
+}	t_gb_col;
 
 // Structure pour les variables environement
 typedef struct s_env

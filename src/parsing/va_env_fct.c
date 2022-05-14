@@ -37,7 +37,7 @@ char	*get_va_env_key(char *str)
 	while (str[i[0]] && str[i[0]] != ' ' && str[i[0]] != '\''
 		&& str[i[0]] != '"' && str[i[0]] != '|' && str[i[0]] != '$')
 		i[0]++;
-	ret = malloc(sizeof(char) * (i[0]] + 1));
+	ret = malloc(sizeof(char) * (i[0] + 1));
 	if (ret == NULL)
 		return (NULL);
 	gb_col_add_list((void *)ret);

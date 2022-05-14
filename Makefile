@@ -42,15 +42,21 @@ CFILE_EXEC			=	exec.c					\
 						get_env_tab.c			\
 						set_cmd_path.c
 
+CFILE_GB			=	gb_collector_list.c
+
 C_DIR				=	./src/
 
 PARS_DIR_NAME		=	parsing/
 
 EXEC_DIR_NAME		=	exec/
 
+GB_DIR_NAME			=	garbage_collector/
+
 PARS_DIR			=	$(addprefix $(C_DIR), $(PARS_DIR_NAME))
 
 EXEC_DIR			=	$(addprefix $(C_DIR), $(EXEC_DIR_NAME))
+
+GB_DIR				=	$(addprefix $(C_DIR), $(GB_DIR_NAME))
 
 LIBFT_DIR			=	./libft/
 
@@ -58,13 +64,15 @@ LIBFT				=	$(LIBFT_DIR)libft.a
 
 SRC					=	$(addprefix $(C_DIR), $(CFILE_COR))		\
 						$(addprefix $(PARS_DIR), $(CFILE_PARS))	\
-						$(addprefix $(EXEC_DIR), $(CFILE_EXEC))	
+						$(addprefix $(EXEC_DIR), $(CFILE_EXEC))	\
+						$(addprefix $(GB_DIR), $(CFILE_GB))
 
 OBJ					=	$(SRC: .c=.o)
 
 OBJS				=	$(C_DIR)*.o			\
 						$(PARS_DIR)*.o		\
-						$(EXEC_DIR)*.o
+						$(EXEC_DIR)*.o		\
+						$(GB_DIR)*.o
 
 all: $(NAME)
 

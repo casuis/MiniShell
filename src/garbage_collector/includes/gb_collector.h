@@ -14,12 +14,6 @@
 # define GB_COLLECTOR_H
 # include "../../includes/minishell.h"
 
-typedef struct s_gb_col
-{
-	void			*ptr;
-	struct s_gb_col	*next;
-}	t_gb_col;
-
 void	gb_col_add_list(void *ptr);
 void	free_gb_col(void);
 #endif
