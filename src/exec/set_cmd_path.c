@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:10:26 by asimon            #+#    #+#             */
-/*   Updated: 2022/04/05 15:10:27 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 21:10:20 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,12 @@ char	*set_cmd_path(t_cmd *cmd, char **path)
 		return (cmd->cmd);
 	cmd_path = set_str_path(path[i], cmd);
 	while (access(cmd_path, F_OK) == -1 && path[++i] != NULL)
-	{
-		free(cmd_path);
 		cmd_path = set_str_path(path[i], cmd);
-	}
 	if (path[i] == NULL)
 	{
 		free(cmd_path);
 		shell.last_return = 127;
 		return (NULL);
 	}
-	free(cmd->cmd);
 	return (cmd_path);
 }

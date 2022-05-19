@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 02:16:50 by asimon            #+#    #+#             */
-/*   Updated: 2022/04/04 02:16:51 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:13:01 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	create_herdoc_fd(t_cmd *cmd)
 
 	i = 1;
 	file = ft_strdup("");
-	file = find_correct_name(file, i); 
+	file = find_correct_name(file, i);
 	while (access(file, F_OK) != -1 && i < 2147483647)
 		file = find_correct_name(file, ++i);
 	if (i == 2147483647)
@@ -77,10 +77,12 @@ char	*reajust_prompt(char *str, t_cmd *cmd)
 
 int	parse_herdoc(char **str, t_cmd *cmd)
 {
-	int 	fd;
+	int		fd;
 	char	*del;
 	char	*prompt;
 
+	prompt = NULL;
+	del = NULL;
 	fd = create_herdoc_fd(cmd);
 	*str += 1;
 	while (**str == ' ' && **str)
@@ -89,10 +91,10 @@ int	parse_herdoc(char **str, t_cmd *cmd)
 		return (ft_error("minishell", "herdoc need a delimiter\n"));
 	del = set_herdoc_del(cmd, str);
 	if (del != NULL)
-	prompt = readline("> ");
+		prompt = readline("> ");
 	while (ft_strcmp(prompt, del) != 1 && prompt != NULL)
 	{
-		prompt = reajust_prompt(prompt, cmd); 
+		prompt = reajust_prompt(prompt, cmd);
 		ft_putstr_fd(prompt, fd);
 		printf("valeur du prompt: |%s|\nValeur de fd: |%d|\n", prompt, fd);
 		free(prompt);

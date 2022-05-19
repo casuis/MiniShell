@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:50:32 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/02 16:50:33 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 19:59:38 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 
 t_shell		shell;
 
-int		ft_core(char **argv, int argc, char **penv)
+int		ft_core(char **penv)
 {
 	char            *str;
-    t_shell        buff;
     const char           *prmpt;
 
 	shell.env = set_env(penv);

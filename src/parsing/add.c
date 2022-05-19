@@ -12,7 +12,6 @@
 
 #include "./include/minishell_parsing.h"
 
-
 char	*ft_add_single_quote(char *old, char **str)
 {
 	int			i;
@@ -71,7 +70,7 @@ char	*ft_add_var_env(char *old, char **str)
 
 	i = 0;
 	va_env = get_va_env(*str);
-	while (**str && **str != ' ' && **str != '\'' 
+	while (**str && **str != ' ' && **str != '\''
 		&& **str != '"' && **str != '$')
 		*str += 1;
 	if (va_env == NULL)

@@ -6,13 +6,13 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:00:39 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/16 21:00:40 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:07:29 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell_parsing.h"
 
-char	*get_cmd_quote(char *ret, char **str, t_cmd *cmds)
+char	*get_cmd_quote(char *ret, char **str)
 {
 	if (**str == '\'')
 	{
@@ -28,7 +28,7 @@ char	*get_cmd_quote(char *ret, char **str, t_cmd *cmds)
 	return (ret);
 }
 
-char	*get_cmd(char **str, t_cmd *cmds)
+char	*get_cmd(char **str)
 {
 	char	*ret;
 
@@ -36,11 +36,11 @@ char	*get_cmd(char **str, t_cmd *cmds)
 	while (**str && **str != ' ')
 	{
 		if (**str == '\'' || **str == '"')
-			ret = get_cmd_quote(ret, str, cmds);
+			ret = get_cmd_quote(ret, str);
 		else if (**str == '$')
 		{
-			*str +=1;
-			ret = ft_add_var_env(ret, str); 
+			*str += 1;
+			ret = ft_add_var_env(ret, str);
 		}
 		else
 			ret = ft_add_char(ret, str);
@@ -83,7 +83,7 @@ void	set_cmd_arg(char **work_str, t_cmd *cmds)
 	{
 		while (**work_str == ' ')
 			*work_str += 1;
-		cmd_buff = get_cmd(work_str, cmds); 
+		cmd_buff = get_cmd(work_str);
 		if (i == 0)
 			cmds->cmd = cmd_buff;
 		cmds->args = add_intable(cmds->args, cmd_buff);
@@ -92,4 +92,3 @@ void	set_cmd_arg(char **work_str, t_cmd *cmds)
 		i++;
 	}
 }
-

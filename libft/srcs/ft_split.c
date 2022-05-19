@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asimon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 15:53:28 by asimon            #+#    #+#             */
-/*   Updated: 2022/01/08 21:44:03 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:59:42 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**ft_split(char *str, char sep)
 
 	i = 0;
 	y = 0;
-	ret = (char **)malloc(sizeof(char *) * (ft_charcpt(str, sep) + 1));
+	ret = (char **)malloc(sizeof(char *) * (ft_charcpt(str, sep) + 2));
 	if (ret == NULL)
 		return (NULL);
 	gb_col_add_list((void *)ret);

@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 19:08:36 by asimon            #+#    #+#             */
-/*   Updated: 2022/02/04 19:08:37 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:02:50 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 int		main(int argc, char **argv, char **env)
 {
-	ft_core(argv, argc, env);
+	(void)argc;
+	(void)argv;
+	ft_core(env);
 	return (0);
 }

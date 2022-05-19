@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:46:58 by asimon            #+#    #+#             */
-/*   Updated: 2022/04/05 12:46:59 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 21:08:18 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**get_env_tab()
 	i[0] = 0;
 	i[1] = 0;
 	buff = shell.env;
-	while (buff->next != NULL)
+	while (buff != NULL)
 	{
 		i[0]++;
 		buff = buff->next;

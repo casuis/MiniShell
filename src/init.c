@@ -6,13 +6,13 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 21:16:10 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/19 21:16:11 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:01:19 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
-void	init_shell(char **penv)
+void	init_shell()
 {
 	shell.cmds = NULL;
 	shell.error = 0;

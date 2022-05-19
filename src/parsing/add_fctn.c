@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 00:38:14 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/18 00:38:15 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:04:52 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ char	**add_arg(char *str, t_cmd *cmd, char *first)
 int	ft_add(char *str, char *ret)
 {
 	int		i;
-	char	*buff;
 
 	i = 0;
 	if (str == NULL)

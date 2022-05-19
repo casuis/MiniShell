@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 13:13:13 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/03 13:13:14 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:09:03 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ char	*set_value_env(char *str)
 	return (ret);
 }
 
-static t_env	*set_strings_env(t_env *ret, t_env *buff, t_env *start, char **penv)
+static t_env	*set_strings_env(t_env *ret,
+	t_env *buff, t_env *start, char **penv)
 {
 	int		i;
 
@@ -89,12 +90,11 @@ static t_env	*set_strings_env(t_env *ret, t_env *buff, t_env *start, char **penv
 
 t_env	*set_env(char **penv)
 {
-	int		i;
 	t_env	*ret;
 	t_env	*buff;
 	t_env	*start;
 
-	if (penv == NULL || penv[i] == NULL)
+	if (penv == NULL || penv[0] == NULL)
 		return (NULL);
 	ret = malloc(sizeof(t_env));
 	if (ret == NULL)

@@ -6,10 +6,9 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 22:36:59 by asimon            #+#    #+#             */
-/*   Updated: 2022/02/27 22:37:01 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:04:27 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "./include/minishell_parsing.h"
 
@@ -39,8 +38,7 @@ t_cmd	*ft_add_list(t_cmd *start)
 	return (new);
 }
 
-
-t_cmd	*get_last_elem()
+t_cmd	*get_last_elem(void)
 {
 	t_cmd	*buff;
 

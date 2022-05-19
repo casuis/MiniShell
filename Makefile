@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asimon <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: asimon <asimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/19 20:13:19 by asimon            #+#    #+#              #
-#    Updated: 2022/03/19 20:13:20 by asimon           ###   ########.fr        #
+#    Updated: 2022/05/19 20:49:04 by asimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME				=	minishell
 CC					=	clang
 
 C_FLAG				=	-Wall -Wextra -Werror
+
+DEBUG_FLAG			=	-g3
 
 R_FLAG				=	-lreadline
 
@@ -32,10 +34,11 @@ CFILE_PARS			=	add.c					\
 						var_env.c				\
 						work_str.c				\
 						herdoc_functions.c		\
-						herdoc.c				\
 						set_herdoc.c			\
 						parsing.c				\
-						parse_in_out.c
+						parse_in_out.c			\
+						ft_utils_parsing.c		\
+						set_fd.c
 
 CFILE_EXEC			=	exec.c					\
 						functions_exec.c		\
@@ -77,13 +80,13 @@ OBJS				=	$(C_DIR)*.o			\
 all: $(NAME)
 
 c.o:
-	$(CC) $(FLAG) -c $< -o $@
+	$(CC) $(C_FLAG) -c $< -o $@
 
 lib:
 	make -C $(LIBFT_DIR)
 
 $(NAME): lib $(OBJ)
-	$(CC) $(FLAG) $(OBJ) $(LIBFT) $(R_FLAG) -o $(NAME)
+	$(CC) $(C_FLAG) $(OBJ) $(LIBFT) $(R_FLAG) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)
@@ -93,6 +96,10 @@ fclean: clean
 	rm -rf $(NAME)
 	@make fclean -C $(LIBFT_DIR)
 
+
+debug: fclean lib $(OBJ)
+	$(CC) $(C_FLAG) $(DEBUG_FLAG) $(OBJ) $(LIBFT) $(R_FLAG) -o $(NAME)
+
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug

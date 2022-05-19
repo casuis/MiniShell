@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 18:02:58 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/26 18:03:01 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:58:25 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@ void	ft_dup(int fd_in, int pipe_fd[], t_cmd *cmd)
 	else
 		dup2(cmd->fd_in, 0);
 	if (cmd->next != NULL && cmd->fd_out == 1)
+	{
 		dup2(pipe_fd[1], 1);
+		close(pipe_fd[1]);
+	}
 	else
 	{
 		dup2(cmd->fd_out, 1);
 		close(pipe_fd[1]);
 	}
 	close(pipe_fd[0]);
-
 }
 
 
@@ -38,6 +40,7 @@ void	ft_exec_cmd(t_cmd *cmd, char **path, char **env)
 	int		wait_ret;
 
 	wait_ret = 0;
+	fd_in = 0;
 	while (cmd != NULL)
 	{
 		cmd->cmd = set_cmd_path(cmd, path);

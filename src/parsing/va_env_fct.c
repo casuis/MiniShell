@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 01:18:02 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/17 01:18:04 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:08:20 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*get_va_env_value(char *str)
 
 char	*get_va_env_key(char *str)
 {
-	char	*cmp;
 	int		i[2];
 	char	*ret;
 
@@ -44,7 +43,7 @@ char	*get_va_env_key(char *str)
 	while (str[i[1]] && str[i[1]] != ' ' && str[i[1]] != '\''
 		&& str[i[1]] != '"' && str[i[1]] != '|' && str[i[1]] != '$')
 	{
-		ret[i[1]] = str[i[1]]; 
+		ret[i[1]] = str[i[1]];
 		i[1]++;
 	}
 	ret[i[1]] = '\0';

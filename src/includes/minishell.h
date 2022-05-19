@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 19:09:56 by asimon            #+#    #+#             */
-/*   Updated: 2022/02/04 19:09:57 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:02:15 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_cmd		*ft_add_list(t_cmd *start);
 t_cmd		*get_last_elem();
 
 // Core
-int			ft_core(char **argv, int argc, char **penv);
+int			ft_core(char **penv);
 void		parsing(char *str);
 void		deffine_cmd_sep(char *str, int i, int pos, t_cmd *cmd);
 void		ft_exec();
@@ -93,7 +93,7 @@ char		*get_va_env(char *str);
 int			count_va_envl(int *count, char *str);
 
 // Init
-void		init_shell(char **penv);
+void		init_shell();
 t_cmd		*init_cmd(t_cmd	*cmd);
 void		reinit_shell();
 

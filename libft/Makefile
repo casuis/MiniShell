@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asimon <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: asimon <asimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/14 10:26:36 by asimon            #+#    #+#              #
-#    Updated: 2020/01/14 10:26:50 by asimon           ###   ########.fr        #
+#    Updated: 2022/05/19 20:49:13 by asimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ OBJS		=	$(SRCS:.c=.o)
 
 RM			=	rm -f
 
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra -Werror -g3
 
 CC			=	gcc
 
@@ -88,6 +88,9 @@ clean:
 
 fclean:		clean
 	@$(RM) $(NAME) $(OBJS_BNS)
+
+debug: $(OBJS)
+
 
 re:			fclean all
 

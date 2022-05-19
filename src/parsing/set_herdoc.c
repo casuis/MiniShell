@@ -73,6 +73,6 @@ char	*set_herdoc_del(t_cmd *cmd, char **work_str)
 	buff = work_str;
 	while (**work_str == ' ')
 		*work_str += 1;
-	cmd_buff = get_herdoc_cmd(work_str, cmd); 
+	cmd_buff = get_herdoc_cmd(work_str, cmd);
 	return (cmd_buff);
 }

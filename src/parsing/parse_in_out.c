@@ -6,48 +6,11 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 21:54:06 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/21 21:54:07 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:14:14 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell_parsing.h"
-
-int	set_fd_in(char **str)
-{
-	int		ret;
-	char	*file;
-
-	file = get_cmd_fd(str);
-	ret = open(file, O_RDONLY);
-	if (ret < 0)
-	{
-		perror(file);
-		shell.error = 1;
-	}
-	free(file);
-	return (ret);
-}
-
-int	set_fd_out(char **str, int mod)
-{
-	char	*file;
-	int		ret;
-
-	file = get_cmd_fd(str);
-	if (mod == 0)
-		ret = open(file, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR
-			| S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-	else
-		ret = open(file, O_CREAT | O_WRONLY | O_APPEND);
-	if (ret < 0)
-	{
-		perror(file);
-		shell.error = 1;
-	}
-	free(file);
-	return (ret);
-
-}
 
 void	parse_in_file(char **str, t_cmd *cmd)
 {
@@ -64,7 +27,8 @@ void	parse_in_file(char **str, t_cmd *cmd)
 		while (**str && **str == ' ')
 			*str += 1;
 		if (**str == '\0')
-			ft_error("minishell", "syntax error near unexpected token 'newline'\n");
+			ft_error("minishell",
+				"syntax error near unexpected token 'newline'\n");
 		else if (**str == '|' || **str == '<' || **str == '>')
 			ft_error("minishell", "syntax error near unexpected token\n");
 		cmd->fd_in = set_fd_in(str);
@@ -92,54 +56,42 @@ void	parse_out_file(char **str, t_cmd *cmd)
 		cmd->fd_out = set_fd_out(str, mod);
 }
 
-char	*set_in_out_work_str(char *str, int i, int pos)
+static char	*ft_quote_undle(char **str, char *ret)
 {
-	char	*ret;
-	int		y;
-
-	y = 0;
-	if (str == NULL)
-		return (NULL);
-	ret = malloc(sizeof(char) * ((pos - i) + 1));
-	while (str[i] && i < pos)
+	if (**str == '\'')
 	{
-		ret[y] = str[i];
-		i++;
-		y++;
+		*str += 1;
+		ret = ft_add_single_quote(ret, str);
 	}
-	ret [i] = '\0';
+	else if (**str == '"')
+	{
+		*str += 1;
+		ret = ft_add_double_quote(ret, str);
+		*str += 1;
+	}
 	return (ret);
 }
 
 char	*get_cmd_fd(char **str)
 {
-		char	*ret;
-		char	**buff;
+	char	*ret;
+	char	**buff;
 
 	ret = NULL;
-	buff = malloc(sizeof (char *) * 3);
-	buff[2] = NULL;
+	buff = malloc(sizeof (char *) * 2);
+	if (buff == NULL)
+		return (NULL);
+	gb_col_add_list((void *)buff);
 	while (**str && **str != ' ')
 	{
-		if (**str == '\'')
-		{
-			*str += 1;
-			ret = ft_add_single_quote(ret, str);
-		}
-		else if (**str == '"')
-		{
-			*str += 1;
-			ret = ft_add_double_quote(ret, str);
-			*str += 1;
-		}
+		if (**str == '"' || **str == '\'')
+			ret = ft_quote_undle(str, ret);
 		else if (**str == '$')
 		{
-			*str +=1;
+			*str += 1;
 			buff[0] = get_va_env(*str);
 			buff[1] = ret;
 			ret = ft_strjoin(ret, buff[0]);
-			free(buff[0]);
-			free(buff[1]);
 		}
 		else
 			ret = ft_add_char(ret, str);
