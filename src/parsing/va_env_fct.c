@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 01:18:02 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 20:08:20 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/23 05:52:17 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ int	count_va_envl(int *count, char *str)
 	char	*key;
 	char	*value;
 	int		ret;
-	int		i;
 
-	i = -1;
 	ret = 1;
 	key = get_va_env_key(str);
 	if (key == NULL)
@@ -65,10 +63,7 @@ int	count_va_envl(int *count, char *str)
 	ret += ft_strlen(key) - 1;
 	value = get_va_env_value(key);
 	if (value == NULL)
-	{
-		free(key);
 		return (ret);
-	}
 	*count += ft_strlen(value);
 	return (ret);
 }
@@ -77,16 +72,14 @@ char	*get_va_env(char *str)
 {
 	char	*key;
 	char	*value;
-	int		i;
 
-	i = -1;
+	if (*str == '?')
+		return (ft_itoa(shell.last_return));
 	key = get_va_env_key(str);
 	if (key == NULL)
 		return (0);
 	value = get_va_env_value(key);
 	if (value == NULL)
-	{
 		return (NULL);
-	}
 	return (value);
 }

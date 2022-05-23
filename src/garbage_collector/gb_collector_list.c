@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:36:18 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/04 10:36:19 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/22 19:33:23 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	gb_col_add_list(void *ptr)
 		list->ptr = ptr;
 		current->next = list;
 		current = list;
+		current->next = NULL;
 	}
-	current->next = NULL;
 }
 
 void	free_gb_col(void)

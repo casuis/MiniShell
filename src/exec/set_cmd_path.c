@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:10:26 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 21:10:20 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/23 05:47:59 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@ char	*set_str_path(char *path, t_cmd *cmd)
 {
 	char	*ret;
 	char	*buff;
-	char	*tmp;
 
 	buff = ft_strjoin(path, "/");
-	tmp = buff;
 	ret = ft_strjoin(buff, cmd->cmd);
-	free(tmp);
 	return (ret);
 }
 
@@ -32,7 +29,7 @@ char	*set_cmd_path(t_cmd *cmd, char **path)
 	int		i;
 
 	i = 0;
-	if (path == NULL || cmd == NULL)
+	if (path == NULL || cmd == NULL || cmd->cmd == NULL)
 		return (NULL);
 	if (access(cmd->cmd, F_OK) != -1)
 		return (cmd->cmd);
@@ -41,9 +38,8 @@ char	*set_cmd_path(t_cmd *cmd, char **path)
 		cmd_path = set_str_path(path[i], cmd);
 	if (path[i] == NULL)
 	{
-		free(cmd_path);
-		shell.last_return = 127;
-		return (NULL);
+		ft_error(cmd->cmd, "No such file or directory\n", 127);
+		return (cmd->cmd);
 	}
 	return (cmd_path);
 }

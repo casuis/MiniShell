@@ -6,37 +6,35 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:50:32 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 19:59:38 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/23 04:16:19 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
-#define CYELLOW "\001\e[0;31m\002"
-#define RESET   "\001\e[0m\002"
 
 t_shell		shell;
 
 int		ft_core(char **penv)
 {
 	char            *str;
-    const char           *prmpt;
+    const char		*prmpt;
 
 	shell.env = set_env(penv);
+	ft_signaux();
     prmpt = "minishell ~ $ ";
     str = readline(prmpt);
     while (str != NULL)
     {
+		init_gb_col();
+		gb_col_add_list(str);
         if (ft_strlen(str) > 0)
             add_history(str);
 		init_shell(penv);
         parsing(str);
-        // Fct teste
-		// Affichage test
-        // printf("ici\n");
-        // ft_test();
-        ft_exec();
-        // reinit_shell();
-
+		if (shell.error != 1)
+			ft_core_exec();
+		del_herdoc();
+        free_gb_col();
         str = readline(prmpt);
     }
 	init_shell(penv);

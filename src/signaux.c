@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/05 16:20:19 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/05 16:20:20 by asimon           ###   ########.fr       */
+/*   Created: 2022/05/23 01:25:07 by asimon            #+#    #+#             */
+/*   Updated: 2022/05/23 05:54:56 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "includes/minishell.h"
 
-void	ft_error(char *prog, char *msg)
+static void	ft_handler(int nb)
 {
-	write(2, prog, ft_strlen(prog));
-	write(2, ": ", 2);
-	write(2, msg, ft_strlen(msg));
+//	char	*prmpt;
+
+//	prmpt = "minishell ~ $ ";
+	if (nb == SIGINT)
+	{
+		// write(1, "\n", 1);
+		shell.error = 1;
+	}
+	else if (nb == SIGQUIT)
+		exit(EXIT_SUCCESS);
+}
+
+
+void	ft_signaux(void)
+{
+	struct sigaction sa;
+
+	sa.sa_handler = ft_handler;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }

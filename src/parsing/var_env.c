@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 13:13:13 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 20:09:03 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/22 05:01:27 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static t_env	*set_strings_env(t_env *ret,
 		}
 		ret->key = set_key_env(penv[i]);
 		ret->value = set_value_env(penv[i]);
+		ret->no_value = 0;
 		buff->next = ret;
 		ret->next = NULL;
 		buff = ret;

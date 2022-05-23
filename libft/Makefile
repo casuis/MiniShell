@@ -6,7 +6,7 @@
 #    By: asimon <asimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/14 10:26:36 by asimon            #+#    #+#              #
-#    Updated: 2022/05/19 20:49:13 by asimon           ###   ########.fr        #
+#    Updated: 2022/05/22 23:21:58 by asimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ FILES_C		= 	ft_atoi.c			\
 				ft_putstr.c			\
 				ft_strncpy.c		\
 				ft_putnbr.c			\
+				ft_isalphanum.c
 
 DIR_C		=	./srcs/
 

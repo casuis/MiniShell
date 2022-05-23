@@ -6,13 +6,15 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 22:38:44 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 20:10:09 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/22 03:12:42 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_PARSING_H
 # define MINISHELL_PARSING_H
 # include "../../includes/minishell.h"
+
+void		parsing(char *str);
 
 // Functions
 int			quote_closed(char c, int *bol);
@@ -47,7 +49,7 @@ int			set_fd_out(char **str, int mod);
 int			set_fd_in(char **str);
 
 // Herdoc
-char		*find_correct_name(char *file, int count);
+char		*find_correct_name(int count);
 char		*set_file_name(int count);
 int			create_herdoc_fd(t_cmd *cmd);
 char		*set_herdoc_del(t_cmd *cmd, char **work_str);

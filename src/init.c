@@ -6,17 +6,16 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 21:16:10 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 20:01:19 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/22 22:42:18 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
-void	init_shell()
+void	init_shell(void)
 {
 	shell.cmds = NULL;
 	shell.error = 0;
-	shell.last_return = 0;
 }
 
 t_cmd	*init_cmd(t_cmd	*cmd)
@@ -30,30 +29,9 @@ t_cmd	*init_cmd(t_cmd	*cmd)
 	return (cmd);
 }
 
-void	reinit_shell()
+void	init_gb_col(void)
 {
-	t_cmd		*cmd;
-	t_cmd		*next;
-	int			i;
-
-	i = 0;
-	cmd = shell.cmds;
-	next = NULL;
-	if (cmd != NULL)
-		next = cmd->next;
-	while (cmd != NULL)
-	{
-		if (cmd->cmd != NULL)
-			free(cmd->cmd);
-		next = cmd->next;
-		if (cmd->args != NULL)
-		{
-			while (cmd->args[i] != NULL)
-				free(cmd->args[i++]);
-			free(cmd->args);
-			i = 0;
-		}
-		free(cmd);
-		cmd = next;
-	}
+	shell.list = malloc(sizeof(t_gb_col));
+	shell.list->ptr = NULL;
+	shell.list->next = NULL;
 }

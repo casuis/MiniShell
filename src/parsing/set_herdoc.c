@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 17:20:54 by asimon            #+#    #+#             */
-/*   Updated: 2022/04/04 17:20:55 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/23 05:50:20 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,8 @@ char	*get_herdoc_cmd(char **str, t_cmd *cmd)
 
 char	*set_herdoc_del(t_cmd *cmd, char **work_str)
 {
-	int		i;
-	char	**buff;
 	char	*cmd_buff;
 
-	i = 0;
-	buff = work_str;
 	while (**work_str == ' ')
 		*work_str += 1;
 	cmd_buff = get_herdoc_cmd(work_str, cmd);

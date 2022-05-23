@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 22:49:34 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/17 22:49:35 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/23 05:54:36 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	*ft_add_double_quote(char *old, char **str)
 			while (**str && **str != ' ' && **str != '"')
 				*str += 1;
 			i += ft_add(value, &ret[i]);
-			free(value);
 		}
 		else
 		{
@@ -65,7 +64,6 @@ char	*ft_add_var_env(char *old, char **str)
 {
 	char	*ret;
 	char	*va_env;
-	char	*buff;
 	int		i;
 
 	i = 0;
@@ -75,7 +73,6 @@ char	*ft_add_var_env(char *old, char **str)
 		*str += 1;
 	if (va_env == NULL)
 		return (NULL);
-	buff = va_env;
 	ret = set_new_ret(old, ft_strlen(va_env), &i);
 	while (*va_env && *va_env != ' ')
 	{
@@ -86,7 +83,6 @@ char	*ft_add_var_env(char *old, char **str)
 	ret[i] = '\0';
 	if (*va_env == ' ')
 		*str = ft_strjoin((char const *)va_env, *str);
-	free(buff);
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 00:38:14 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 20:04:52 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/23 05:54:07 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ int	get_ldbl_quote(char *str)
 char	*set_new_ret(char *old, int size, int *i)
 {
 	char		*ret;
-	char		*buff;
 
-	buff = old;
 	ret = malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)	
 		return (NULL);

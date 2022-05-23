@@ -1,45 +1,29 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-// Test pour pouvoir utiliser cette fonction n'importe ou
-
-char	*ft_create(size_t nb, size_t size)
+void	built_cd(t_cmd *cmds)
 {
-	char	*str;
+	t_env		*buff;
+	t_env		*tmp;
 
-	str = malloc(size * (nb + 1));
-	gb_col_add_list((void *)str);
-	return (str);
-}
-
-char	*ft_pwd()
-{
-	char	*path;
-	size_t	len = 1;
-
-	path = ft_create(len, sizeof(char));
-	if (path == NULL)
-		return (NULL) ;
-	path = getcwd(path, len);
-	while (path == NULL)
-	  	path = getcwd(path, ++len);
-	return (path);
-}
-
-char	*ft_cd(const char *path)
-{
-	char	*pwd;
-
-	chdir(path);
-	pwd = ft_pwd();
-	return (pwd);
-}
-
-int		main(int argc, const char **argv)
-{
-	char	*pwd;
-
-	(void)argc;
-	pwd = ft_cd(argv[1]);
-	printf("%s \n", pwd);
-	return (0);
+	buff = shell.env;
+	tmp = shell.env;
+	if (cmds->args[1] == NULL || cmds->args[2] != NULL)
+	{
+		ft_error("minishell", " cd: Wrong number of argument", 1);
+		return ;
+	}
+	while (ft_strcmp(tmp->key, "OLDPWD"))
+		tmp = tmp->next;
+	if (chdir(cmds->args[1]))
+	{
+		while (ft_strcmp(buff->key, "PWD"))
+			buff = buff->next;
+		free(tmp->value);
+		tmp->value = ft_strdup(buff->value);
+		free(buff->value);
+		buff->value = getcwd(NULL, 0);
+		shell.last_return = 0;
+	}
+	else
+		shell.last_return = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 21:58:41 by asimon            #+#    #+#             */
-/*   Updated: 2022/03/29 21:58:43 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/22 05:48:15 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		is_builtin(char	*cmd)
 	while (builtin[i] != NULL)
 	{
 		if (ft_strcmp(builtin[i], cmd))
-			return (1);
+			return (i + 1);
 		i++;
 	}
 	return (0);

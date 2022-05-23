@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:37:38 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/18 19:37:40 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/21 03:21:08 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	set_fd_in(char **str)
 		perror(file);
 		shell.error = 1;
 	}
-	free(file);
 	return (ret);
 }
 
@@ -44,6 +43,5 @@ int	set_fd_out(char **str, int mod)
 		perror(file);
 		shell.error = 1;
 	}
-	free(file);
 	return (ret);
 }

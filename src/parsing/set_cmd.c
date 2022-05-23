@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:00:39 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 20:07:29 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/23 05:53:06 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,9 @@ char	**add_intable(char **args, char *str)
 void	set_cmd_arg(char **work_str, t_cmd *cmds)
 {
 	int		i;
-	char	**buff;
 	char	*cmd_buff;
 
 	i = 0;
-	buff = work_str;
 	while (**work_str && shell.error == 0)
 	{
 		while (**work_str == ' ')

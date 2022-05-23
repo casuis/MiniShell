@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asimon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:40:07 by asimon            #+#    #+#             */
-/*   Updated: 2020/01/15 15:56:32 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/22 23:33:19 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void				ft_putchar(char c);
 void				ft_putstr(char *str);
 char				*ft_strncpy(char *str, int nb);
 void				ft_putnbr(int nb, int base);
+int					ft_isalphanum(char *str);
 
 typedef struct s_list
 {

@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 14:53:04 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 19:59:12 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/23 05:49:52 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ void	deffine_cmd_sep(char *str, int i, int pos, t_cmd *cmd)
 {
 	int		bol;
 	char	*work_str;
-	char	*buff;
 
 	bol = 3;
 	work_str = set_in_out_work_str(str, i, pos);
-	buff = work_str;
 	if (str == NULL || work_str == NULL)
 		return ;
 	while (*work_str && shell.error == 0)
@@ -36,14 +34,25 @@ void	deffine_cmd_sep(char *str, int i, int pos, t_cmd *cmd)
 		if (*work_str != '\0')
 			work_str++;
 	}
-	free(buff);
+}
+
+static void	check_null_pipe(char *str, int end, int start)
+{
+	if (shell.error == 1)
+		return ;
+	while (str[start] && start < end)
+	{
+		if (str[start] != ' ')
+			return ;
+		start++;
+	}
+	ft_error("minishell", "syntax error\n", 1);
 }
 
 void	parsing(char *str)
 {
 	int		balise[2];
 	char	*work_str;
-	char	*buff;
 	t_cmd	*cmd;
 
 	balise[0] = 0;
@@ -53,14 +62,13 @@ void	parsing(char *str)
 	while (str[balise[0]] && shell.error == 0)
 	{
 		balise[1] += get_next_pipe(&str[balise[1]]);
+		check_null_pipe(str, balise[1], balise[0]);
 		if (shell.error == 1)
 			break ;
 		cmd = ft_add_list(cmd);
 		deffine_cmd_sep(str, balise[0], balise[1], cmd);
 		work_str = set_work_str(str, balise[0], balise[1]);
-		buff = work_str;
 		set_cmd_arg(&work_str, cmd);
-		free(buff);
 		if (str[balise[1]] != '\0')
 			balise[1]++;
 		balise[0] = balise[1];

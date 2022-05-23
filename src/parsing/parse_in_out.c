@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 21:54:06 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 20:14:14 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/23 05:55:22 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 void	parse_in_file(char **str, t_cmd *cmd)
 {
-	int			i;
-
-	i = 0;
 	*str += 1;
 	if (**str == '>')
-		ft_error("minishell", "operator '<>' does not have to be recreated\n");
+		ft_error("minishell", "operator '<>' does not have to be recreated\n", 1);
 	else if (**str == '<')
 		cmd->fd_in = parse_herdoc(str, cmd);
 	else
@@ -28,9 +25,9 @@ void	parse_in_file(char **str, t_cmd *cmd)
 			*str += 1;
 		if (**str == '\0')
 			ft_error("minishell",
-				"syntax error near unexpected token 'newline'\n");
+				"syntax error near unexpected token 'newline'\n", 1);
 		else if (**str == '|' || **str == '<' || **str == '>')
-			ft_error("minishell", "syntax error near unexpected token\n");
+			ft_error("minishell", "syntax error near unexpected token\n", 1);
 		cmd->fd_in = set_fd_in(str);
 	}
 }
@@ -42,7 +39,7 @@ void	parse_out_file(char **str, t_cmd *cmd)
 	mod = 0;
 	*str += 1;
 	if (**str == '<')
-		ft_error("minishell", "syntax error\n");
+		ft_error("minishell", "syntax error\n", 1);
 	else if (**str == '>')
 	{
 		mod = 1;
@@ -51,7 +48,7 @@ void	parse_out_file(char **str, t_cmd *cmd)
 	while (**str && **str == ' ' && shell.error == 0)
 		*str += 1;
 	if (**str == '<' || **str == '>' || **str == '\0')
-		ft_error("minishell", "syntax syntax error near unexpected token\n");
+		ft_error("minishell", "syntax syntax error near unexpected token\n", 1);
 	if (shell.error == 0)
 		cmd->fd_out = set_fd_out(str, mod);
 }

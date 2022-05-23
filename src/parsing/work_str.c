@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 22:14:46 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/19 21:17:27 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/22 19:33:30 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ char	*set_in_out_work_str(char *str, int i, int pos)
 	y = 0;
 	if (str == NULL)
 		return (NULL);
-	ret = malloc(sizeof(char) * ((pos - i) + 1));
+	ret = (char *)malloc(sizeof(char) * ((pos - i) + 1));
+	if (ret == NULL)
+		return (NULL);
+	gb_col_add_list((void *)ret);
 	while (str[i] && i < pos)
 	{
 		ret[y] = str[i];
@@ -76,6 +79,8 @@ char	*set_work_str(char *str, int i, int balise)
 	ret_i = 0;
 	size = get_work_str_size(str, i, balise);
 	ret = malloc(sizeof(char) * (size + 1));
+	if (ret == NULL)
+		return (NULL);
 	gb_col_add_list((void *)ret);
 	while (i < balise)
 	{
