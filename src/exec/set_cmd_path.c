@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:10:26 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/23 05:47:59 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/24 20:33:27 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*set_cmd_path(t_cmd *cmd, char **path)
 	int		i;
 
 	i = 0;
-	if (path == NULL || cmd == NULL || cmd->cmd == NULL)
+	if (path == NULL || cmd == NULL || cmd->cmd == NULL || cmd->cmd[0] == '\0')
 		return (NULL);
 	if (access(cmd->cmd, F_OK) != -1)
 		return (cmd->cmd);

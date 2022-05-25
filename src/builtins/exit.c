@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/25 21:32:43 by asimon            #+#    #+#             */
+/*   Updated: 2022/05/25 21:32:44 by asimon           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "../includes/minishell.h"
 
 void    free_env(void)
@@ -44,5 +56,5 @@ void	built_exit(t_cmd *cmds)
 	free_env();
 	if (mod == 0)
 		shell.last_return = 0;
-	exit(EXIT_SUCCESS);
+	exit(shell.last_return);
 }

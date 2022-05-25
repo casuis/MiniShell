@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:46:20 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/23 05:53:41 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/24 20:33:26 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@ int	get_next_pipe(char *str)
 {
 	int		i;
 	int		bol;
+	int		empty;
 
 	i = 0;
 	bol = 3;
+	empty = 0;
 	while (str[i])
 	{
+		if (str[i] != ' ')
+			empty = 1;
 		if (str[i] == '"' && bol > 2)
 			bol = 1;
 		else if (str[i] == '\'' && bol > 2)
@@ -33,9 +37,9 @@ int	get_next_pipe(char *str)
 			break ;
 		i++;
 	}
-	if ((bol == 3 && (str[i] == '\0' || str[i + 1] != '|')))
+	if ((bol == 3 && (str[i] == '\0' || str[i + 1] != '|')) && empty == 1)
 		return (i);
-	ft_error("minishell", "syntax error\n", 2);
+	ft_error("minishell", "syntax error \n", 2);
 	return (i);
 }
 

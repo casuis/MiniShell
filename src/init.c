@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 21:16:10 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/22 22:42:18 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/25 21:55:47 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_shell(void)
 {
 	shell.cmds = NULL;
+	shell.pid = 1;
 	shell.error = 0;
 }
 

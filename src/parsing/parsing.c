@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 14:53:04 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/25 20:07:28 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/25 21:51:12 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static int	check_null(char *str)
 			if (bol == 0)
 				ft_error("minishell", "syntax error\n", 1);
 		}
-		i++;
+		if (str[i] != '\0')
+			i++;
 	}
 	return (bol);
 }
