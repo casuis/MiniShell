@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 14:53:04 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/23 05:49:52 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/25 20:07:28 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,31 @@ void	deffine_cmd_sep(char *str, int i, int pos, t_cmd *cmd)
 	}
 }
 
-static void	check_null_pipe(char *str, int end, int start)
+static int	check_null(char *str)
 {
-	if (shell.error == 1)
-		return ;
-	while (str[start] && start < end)
+	int		i;
+	int		bol;
+	int		pipe;
+
+	i = 0;
+	bol = 0;
+	pipe = 0;
+	while (str[i])
 	{
-		if (str[start] != ' ')
-			return ;
-		start++;
+		if (str[i] != ' ' && str[i] != '|')
+			bol = 1;
+		if (str[i] == '|')
+		{
+			bol = 0;
+			while (str[++i] && str[i] != '|')		
+				if (str[i] != ' ')
+					bol = 1;
+			if (bol == 0)
+				ft_error("minishell", "syntax error\n", 1);
+		}
+		i++;
 	}
-	ft_error("minishell", "syntax error\n", 1);
+	return (bol);
 }
 
 void	parsing(char *str)
@@ -59,10 +73,11 @@ void	parsing(char *str)
 	balise[1] = 0;
 	cmd = get_last_elem();
 	work_str = NULL;
+	if (check_null(str) == 0)
+		return ;
 	while (str[balise[0]] && shell.error == 0)
 	{
 		balise[1] += get_next_pipe(&str[balise[1]]);
-		check_null_pipe(str, balise[1], balise[0]);
 		if (shell.error == 1)
 			break ;
 		cmd = ft_add_list(cmd);
