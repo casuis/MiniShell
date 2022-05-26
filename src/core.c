@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:50:32 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/25 21:37:43 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/26 21:44:04 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int		ft_core(char **penv)
     const char		*prmpt;
 
 	shell.env = set_env(penv);
-	// ft_signaux();
+	shell.pid = 1;
+	ft_signaux();
     prmpt = "minishell ~ $ ";
     str = readline(prmpt);
     while (str != NULL)
@@ -35,7 +36,9 @@ int		ft_core(char **penv)
 			ft_core_exec();
 		del_herdoc();
         free_gb_col();
+		shell.pid = 1;
         str = readline(prmpt);
+		ft_signaux();
     }
 	init_shell(penv);
 	return (0);
