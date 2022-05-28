@@ -1,3 +1,3 @@
 # MiniShell
 ***
-_As beautifull as a shell_
+_As beautiful as a shell_
