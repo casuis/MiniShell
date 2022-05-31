@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 01:25:07 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/26 21:47:27 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/31 01:54:12 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 static void	ft_handler(int nb)
 {
+	int		test_fd;
+	struct termios *test2;
+	struct termios *old;
+
+	test_fd = 1;
+	test2 = malloc(sizeof(struct termios) * 1);
+	old = malloc(sizeof(struct termios) * 1);
 	if (nb == SIGINT)
 	{
 		if (shell.pid == 1)
@@ -26,7 +33,21 @@ static void	ft_handler(int nb)
 		}
 	}
 	else if (nb == SIGQUIT)
-		printf("\b\b  \b\b");
+	{
+		test_fd = ttyslot();
+		if (isatty(test_fd))
+		{
+
+			if (tcgetattr(test_fd, test2) == 0)
+			{
+				tcgetattr(test_fd, old);
+				test2->c_lflag = ECHO | ICANON;
+				test2->c_cc[VQUIT] = 0;
+				tcsetattr(test_fd, 0, test2);
+				tcsetattr(test_fd, 0, old);
+			}
+		}
+	}
 }
 
 

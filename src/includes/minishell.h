@@ -6,7 +6,7 @@
 /*   By: asimon <asimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 19:09:56 by asimon            #+#    #+#             */
-/*   Updated: 2022/05/23 04:05:40 by asimon           ###   ########.fr       */
+/*   Updated: 2022/05/30 21:46:40 by asimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/types.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <termio.h>
 # include "./struct.h"
 # include "../../libft/includes/libft.h"
 # include "../exec/include/minishell_exec.h"
